@@ -1,16 +1,11 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-PATH=$(npm bin):$PATH
-
 # Run Markdown formatter
-npm run format:md
+npx prettier --write "**/*.md"
 
 # Add formatted files to staging area
 git add ./**/*.md
 
 # Run Markdown linter
-npm run lint:md
+npx remark . --quiet --frail
 
 # Check if the linter found any errors
 if [ $? -ne 0 ]; then
