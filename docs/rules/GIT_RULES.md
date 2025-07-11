@@ -57,6 +57,7 @@
         *   1行空けてから記述を開始します。
         *   各行は72文字で折り返すことを推奨します。
         *   変更の「理由」と「方法」を説明します。
+        *   **複数行のコミットメッセージの記述方法:** `git commit` コマンドで複数行のメッセージを記述する場合、最初の `-m` オプションで件名（Subject）を指定し、その後の各行を別の `-m` オプションで指定します。例: `git commit -m "feat: Add new feature" -m "This commit introduces a new feature that does X." -m "It also addresses Y and Z."`
 
     *   **`[optional footer(s)]` (任意):** 以下の情報を記述できます。
         *   **Breaking Changes:** 破壊的変更がある場合は、`BREAKING CHANGE:` または `BREAKING-CHANGE:` で開始し、その変更がなぜ破壊的であるか、および移行方法を記述します (major バージョンアップに相当)。
