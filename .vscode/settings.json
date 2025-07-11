@@ -6,5 +6,8 @@
   },
   "markdownlint.config": {
     "MD033": false
+  },
+  "[dotenv]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
   }
 }
