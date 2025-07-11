@@ -1,8 +1,14 @@
-# Run Markdown formatter
-npx prettier --write "**/*.md"
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
 
-# Add formatted files to staging area
-git add ./**/*.md
+# Stage all changes first
+git add .
+
+# Run formatter for Markdown and JSON files
+npx prettier --write "**/*.{md,json}"
+
+# Add formatted files to staging area again (in case prettier made changes)
+git add .
 
 # Run Markdown linter
 npx remark . --quiet --frail
