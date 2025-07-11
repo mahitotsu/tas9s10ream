@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+PATH=$(npm bin):$PATH
+
+# Run Markdown formatter
+npm run format:md
+
+# Add formatted files to staging area
+git add ./**/*.md
+
+# Run Markdown linter
+npm run lint:md
+
+# Check if the linter found any errors
+if [ $? -ne 0 ]; then
+  echo "Markdown linting failed. Please fix the errors before committing."
+  exit 1
+fi
