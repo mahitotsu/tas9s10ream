@@ -33,5 +33,8 @@
     "*.md": [
       "remark --quiet --frail"
     ]
+  },
+  "dependencies": {
+    "remark-lint-list-item-indent": "^4.0.1"
   }
 }
