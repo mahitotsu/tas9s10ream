@@ -26,18 +26,18 @@ GTDは、以下の5つのステップからなるワークフローを提唱し�
 ```mermaid
 graph TD
     subgraph GTD Workflow
-        A[収集 (Capture)] --> B{処理 (Clarify)};
-        B -- "行動不要" --> C(ゴミ箱 / 資料 / いつか・多分);
-        B -- "行動必要" --> D{2分ルール?};
-        D -- "Yes" --> E[即時実行];
-        D -- "No" --> F{委任?};
-        F -- "Yes" --> G[委任];
-        F -- "No" --> H[延期 / プロジェクト];
-        E --> I[整理 (Organize)];
+        A[Capture] --> B{Clarify};
+        B -- "Action Not Required" --> C(Trash / Reference / Someday-Maybe);
+        B -- "Action Required" --> D{2-Minute Rule?};
+        D -- "Yes" --> E[Do It Now];
+        D -- "No" --> F{Delegate?};
+        F -- "Yes" --> G[Delegated];
+        F -- "No" --> H[Defer / Project];
+        E --> I[Organize];
         G --> I;
         H --> I;
-        I --> J[実行 (Engage)];
-        J --> K[省察 (Reflect)];
+        I --> J[Engage];
+        J --> K[Reflect];
         K --> A;
     end
 ```
