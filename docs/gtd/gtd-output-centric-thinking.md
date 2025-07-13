@@ -1,4 +1,4 @@
-### GTDにおけるアウトプット中心の考え方と活用 (Output-Centric Thinking and Utilization in GTD)
+# GTDにおけるアウトプット中心の考え方と活用 (Output-Centric Thinking and Utilization in GTD)
 
 GTD（Getting Things
 Done）は、デビッド・アレンが開発したタスク管理手法であり、その本質は「頭の中にある情報ややるべきことを外部（ノートやデジタルツールなど）に書き出すことで可視化し、記憶への負担を減らす」という「アウトプット中心」の考え方にあります。これにより、「何をするか」「いつするか」が明確になり、効率的な行動につながります。
