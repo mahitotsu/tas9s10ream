@@ -1,10 +1,16 @@
 # アーキテクチャ決定記録 (Architecture Decision Record: ADR) テンプレート
 
-## 1. タイトル (Title)
+## 1. ID
+
+ADR-[YYYY]-[NNN]
+
+例: ADR-2025-001
+
+## 2. タイトル (Title)
 
 [決定の簡潔な要約]
 
-例: ADR 001: 認証メカニズムの選択
+例: 認証メカニズムの選択
 
 ## 2. ステータス (Status)
 

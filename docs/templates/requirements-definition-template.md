@@ -1,5 +1,9 @@
 # 要件定義書テンプレート
 
+## ID
+
+RDD-[YYYY]-[NNN]
+
 ## 1. はじめに (Introduction)
 
 - 目的 (Purpose)
