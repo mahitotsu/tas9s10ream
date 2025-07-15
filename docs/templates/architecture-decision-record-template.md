@@ -12,17 +12,13 @@ ADR-[YYYY]-[NNN]
 
 例: 認証メカニズムの選択
 
-## 2. ステータス (Status)
+## 3. ステータス (Status)
 
 [Proposed / Accepted / Rejected / Deprecated / Superseded]
 
-## 3. 決定日 (Date)
+## 4. 決定日 (Date)
 
 [YYYY-MM-DD]
-
-## 4. 決定者 (Deciders)
-
-[決定を下した担当者またはチーム]
 
 ## 5. 背景 (Context)
 
