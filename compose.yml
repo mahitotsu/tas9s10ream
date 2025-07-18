@@ -1,0 +1,15 @@
+services:
+  gemini-cli:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    volumes:
+      - .:/home/appuser/app
+      - ~/.gemini:/home/appuser/.gemini
+      - ~/.gitconfig:/home/appuser/.gitconfig:ro
+    environment:
+      PATH: ${PATH}:/home/appuser/.local/bin
+    command: tail -f /dev/null
