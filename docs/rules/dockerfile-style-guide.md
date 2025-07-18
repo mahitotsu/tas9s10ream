@@ -95,3 +95,21 @@ EXPOSE 3000
 # アプリケーションの起動
 CMD [ "node", "dist/index.js" ]
 ```
+
+## 4. フォーマットと可読性
+
+- **行の長さ**: 各行は80文字を超えないようにしてください。長いコマンドや引数は、バックスラッシュ (`\`) を使用して複数行に分割してください。
+
+  ```dockerfile
+  RUN apt-get update && apt-get install -y \
+      long-package-name-one \
+      another-very-long-package-name \
+      yet-another-package \
+   && rm -rf /var/lib/apt/lists/*
+  ```
+
+- **空行**: 論理的に関連する命令のグループ間に空行を挿入し、可読性を向上させてください。連続する空行は避けてください。
+
+```
+
+```
