@@ -1,5 +1,5 @@
 # Use a debian base image
-FROM debian:stable-slim
+FROM debian:bookworm-slim
 
 # Install necessary tools: git, python3, pip, nodejs, npm, sudo
 # python3-venv is added for creating Python virtual environments.
