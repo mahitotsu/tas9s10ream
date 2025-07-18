@@ -9,9 +9,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install",
     "lint:md": "./node_modules/.bin/remark . --quiet --frail",
-    "lint:sh": "./node_modules/.bin/shellcheck \"**/*.sh\"",
+    "lint:sh": "./node_modules/.bin/shellcheck",
     "format:all": "prettier --write \"**/*.{md,json,sh}\"",
-    "lint-staged": "lint-staged"
+    "lint-staged": "npx lint-staged"
   },
   "keywords": [],
   "author": "",
