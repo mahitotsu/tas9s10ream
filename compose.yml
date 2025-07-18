@@ -8,6 +8,7 @@ services:
         HOST_GID: ${GID:-${UID:-1000}}
     volumes:
       - .:/home/appuser/${PROJECT_DIR_NAME}
+      - .:/tmp:/tmp
       - ~/.gemini:/home/appuser/.gemini
       - ~/.config/gcloud:/home/appuser/.config/gcloud:ro
       - ~/.gitconfig:/home/appuser/.gitconfig:ro
