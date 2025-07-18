@@ -9,8 +9,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install",
     "lint:md": "./node_modules/.bin/remark . --quiet --frail",
-    "format:all": "prettier --write \"**/*.{md,json}\"",
-    "lint": "lint-staged"
+    "lint:sh": "./node_modules/.bin/shellcheck",
+    "format:all": "prettier --write \"**/*.{md,json,sh}\"",
+    "lint-staged": "npx lint-staged"
   },
   "keywords": [],
   "author": "",
@@ -22,16 +23,21 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "prettier": "^3.6.2",
+    "prettier-plugin-sh": "^0.18.0",
     "remark-cli": "^11.0.0",
     "remark-lint": "^10.0.1",
-    "remark-preset-prettier": "^2.0.2"
+    "remark-preset-prettier": "^2.0.2",
+    "shellcheck": "^3.1.0"
   },
   "lint-staged": {
-    "*.{md,json}": [
+    "*.{md,json,sh}": [
       "prettier --write"
     ],
+    "*.sh": [
+      "npm run lint:sh --"
+    ],
     "*.md": [
-      "remark --quiet --frail"
+      "npm run lint:md --"
     ]
   },
   "dependencies": {
@@ -40,6 +46,7 @@
     "remark-lint-list-item-indent": "^4.0.1",
     "remark-lint-maximum-line-length": "^4.1.1",
     "remark-lint-no-missing-blank-lines": "^4.0.1",
+    "remark-lint-ordered-list-marker-style": "^4.0.1",
     "remark-lint-ordered-list-marker-value": "^4.0.1"
   }
 }
