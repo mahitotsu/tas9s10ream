@@ -9,6 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install",
     "lint:md": "./node_modules/.bin/remark . --quiet --frail",
+    "lint:sh": "./node_modules/.bin/shellcheck \"**/*.sh\"",
     "format:all": "prettier --write \"**/*.{md,json,sh}\""
   },
   "keywords": [],
@@ -24,11 +25,15 @@
     "prettier-plugin-sh": "^0.18.0",
     "remark-cli": "^11.0.0",
     "remark-lint": "^10.0.1",
-    "remark-preset-prettier": "^2.0.2"
+    "remark-preset-prettier": "^2.0.2",
+    "shellcheck": "^3.1.0"
   },
   "lint-staged": {
     "*.{md,json,sh}": [
       "prettier --write"
+    ],
+    "*.sh": [
+      "shellcheck"
     ],
     "*.md": [
       "remark --quiet --frail"
