@@ -3,16 +3,7 @@ FROM debian:stable-slim
 
 # Install necessary tools: git, python3, pip, nodejs, npm, sudo
 # python3-venv is added for creating Python virtual environments.
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    git \
-    python3 \
-    python3-pip \
-    python3-venv \
-    nodejs \
-    npm \
-    sudo \
-    pipx \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends     git     python3     python3-pip     python3-venv     nodejs     npm     sudo     pipx     shellcheck     curl     &&     curl -L https://github.com/mvdan/sh/releases/download/v3.8.0/shfmt_v3.8.0_linux_amd64 -o /usr/local/bin/shfmt &&     chmod +x /usr/local/bin/shfmt &&     curl -L https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64 -o /usr/local/bin/hadolint &&     chmod +x /usr/local/bin/hadolint &&     rm -rf /var/lib/apt/lists/*
 
 # Declare build arguments for HOST_UID and HOST_GID
 ARG HOST_UID=1000

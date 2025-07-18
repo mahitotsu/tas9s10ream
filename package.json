@@ -9,8 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install",
     "lint:md": "./node_modules/.bin/remark . --quiet --frail",
-    "format:all": "prettier --write \"**/*.{md,json}\"",
-    "lint": "lint-staged"
+    "format:all": "prettier --write \"**/*.{md,json,sh}\""
   },
   "keywords": [],
   "author": "",
@@ -22,12 +21,13 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "prettier": "^3.6.2",
+    "prettier-plugin-sh": "^0.18.0",
     "remark-cli": "^11.0.0",
     "remark-lint": "^10.0.1",
     "remark-preset-prettier": "^2.0.2"
   },
   "lint-staged": {
-    "*.{md,json}": [
+    "*.{md,json,sh}": [
       "prettier --write"
     ],
     "*.md": [
