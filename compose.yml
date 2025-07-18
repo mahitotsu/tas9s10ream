@@ -9,7 +9,8 @@ services:
     volumes:
       - .:/home/appuser/app
       - ~/.gemini:/home/appuser/.gemini
+      - ~/.config/gcloud:/home/appuser/.config/gcloud:ro
       - ~/.gitconfig:/home/appuser/.gitconfig:ro
     environment:
-      PATH: ${PATH}:/home/appuser/.local/bin
+      GOOGLE_CLOUD_PROJECT: ${GOOGLE_CLOUD_PROJECT:-your-project-id}
     command: tail -f /dev/null

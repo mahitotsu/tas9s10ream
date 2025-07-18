@@ -35,7 +35,7 @@ fi
 
 echo "
 Starting gemini-cli inside the container..."
-docker compose exec gemini-cli gemini
+docker compose exec gemini-cli bash -c "gemini -d"
 
 
 echo "
@@ -44,4 +44,4 @@ echo "To enter the container and run gemini-cli, use:"
 echo "docker compose exec gemini-cli gemini"
 echo "
 To stop the container, use:"
-echo "docker compose down"
+docker compose down
