@@ -4,13 +4,15 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        UID: ${UID:-1000}
-        GID: ${GID:-1000}
+        HOST_UID: ${UID:-1000}
+        HOST_GID: ${GID:-${UID:-1000}}
     volumes:
-      - .:/home/appuser/app
+      - .:/home/appuser/${PROJECT_DIR_NAME}
       - ~/.gemini:/home/appuser/.gemini
       - ~/.config/gcloud:/home/appuser/.config/gcloud:ro
       - ~/.gitconfig:/home/appuser/.gitconfig:ro
     environment:
+      PROJECT_DIR_NAME: ${PROJECT_DIR_NAME}
       GOOGLE_CLOUD_PROJECT: ${GOOGLE_CLOUD_PROJECT:-your-project-id}
+    working_dir: /home/appuser/${PROJECT_DIR_NAME}
     command: tail -f /dev/null

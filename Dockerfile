@@ -14,13 +14,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pipx \
     && rm -rf /var/lib/apt/lists/*
 
-# Declare build arguments for UID and GID
-ARG UID=1000
-ARG GID=1000
+# Declare build arguments for HOST_UID and HOST_GID
+ARG HOST_UID=1000
+ARG HOST_GID=1000
 
-# Create a group and user with the specified UID/GID
-RUN if ! getent group ${GID} >/dev/null; then addgroup --gid ${GID} appgroup; fi \
-    && if ! getent passwd ${UID} >/dev/null; then adduser --uid ${UID} --gid ${GID} --shell /bin/bash --disabled-password --gecos "" appuser; fi
+# Create a group and user with the specified HOST_UID/HOST_GID
+RUN if ! getent group ${HOST_GID} >/dev/null; then addgroup --gid ${HOST_GID} appgroup; fi \
+    && if ! getent passwd ${HOST_UID} >/dev/null; then adduser --uid ${HOST_UID} --gid ${HOST_GID} --shell /bin/bash --disabled-password --gecos "" appuser; fi
 
 # Install gemini-cli globally
 RUN npm install -g @google/gemini-cli
@@ -29,7 +29,7 @@ RUN npm install -g @google/gemini-cli
 USER appuser
 
 # Set the working directory in the container
-WORKDIR /home/appuser/app
+
 
 # Install uv using pipx
 RUN pipx install uv

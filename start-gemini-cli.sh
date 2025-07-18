@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Build and run the container in detached mode
-UID=$(id -u) GID=$(id -g) docker compose up --build -d
+_project_dir_name_temp=$(basename "$(pwd)")
+export PROJECT_DIR_NAME="${_project_dir_name_temp}"
+docker compose up --build -d
 
 echo "Waiting for container 'gemini-cli' to be ready..."
 
@@ -35,7 +37,7 @@ fi
 
 echo "
 Starting gemini-cli inside the container..."
-docker compose exec gemini-cli bash -c "gemini -d"
+docker compose exec gemini-cli bash -c "gemini --model=gemini-2.5-flash"
 
 
 echo "
