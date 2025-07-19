@@ -291,4 +291,4 @@ graph TD
 
 1. **ツールと標準化の活用**: ドキュメント作成の効率化と品質向上のため、テンプレート（例:
    `docs/templates/glossary-template.md`,
-   `docs/templates/architecture-decision-record-template.md`）の活用や標準化、ドキュメント管理ツールの導入を推奨します。
+   `docs/templates/architecture-decision-record-template.md`）の活用や標準化、ドキュメント管理ツールの導入を推奨します。テンプレートには、ドキュメント作成時に記述すべき内容をガイドするためのインラインコメントが含まれています。
