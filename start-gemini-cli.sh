@@ -41,12 +41,8 @@ gemini -p /quit
 
 echo "
 Starting gemini-cli inside the container..."
-docker compose exec gemini-cli bash -c "gemini --model=gemini-2.5-flash"
+docker compose exec gemini-cli bash -l -c "gemini --model=gemini-2.5-flash"
 
-echo "
-Container 'gemini-cli' is running in the background."
-echo "To enter the container and run gemini-cli, use:"
-echo "docker compose exec gemini-cli gemini"
 echo "
 To stop the container, use:"
 docker compose down
