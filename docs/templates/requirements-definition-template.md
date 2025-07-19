@@ -26,33 +26,19 @@ RDD-[YYYY]-[NNN]
 - 一般的な制約 (General Constraints)
 - 前提と依存関係 (Assumptions and Dependencies)
 
-## 3. 機能要件 (Functional Requirements)
-
-- ※詳細は `functional_requirement_template.md`
-  を参照し、以下に機能をリストしてください。
-- 例: FR-001 (ユーザー登録機能), FR-002 (商品検索機能)
-
-## 4. 非機能要件 (Non-Functional Requirements)
-
-- ※詳細は `non_functional_requirement_template.md`
-  を参照し、以下に非機能要件をリストしてください。
-- 例: NFR-001 (応答速度), NFR-002 (データ保全性)
-
-## 5. ユースケース (Use Cases)
+## 3. ユースケース (Use Cases)
 
 - ※詳細は `use_case_template.md`
   を参照し、以下にユースケースをリストしてください。
 - 例: UC-001 (商品を購入する), UC-002 (パスワードをリセットする)
 
-## 6. データ要件 (Data Requirements)
+## 4. 機能要件 (Functional Requirements)
 
-- データモデル (Data Model)
-  - ※詳細は `database_entity_template.md`
-    を参照し、以下にエンティティをリストしてください。
-  - 例: ENT-001 (ユーザー), ENT-002 (商品)
-- データ辞書 (Data Dictionary)
+- ※詳細は `functional_requirement_template.md`
+  を参照し、以下に機能をリストしてください。
+- 例: FR-001 (ユーザー登録機能), FR-002 (商品検索機能)
 
-## 7. インターフェース要件 (Interface Requirements)
+### 4.1. インターフェース要件 (Interface Requirements)
 
 - ユーザーインターフェース (User Interfaces)
   - ※詳細は `screen_template.md` を参照し、以下に画面をリストしてください。
@@ -60,3 +46,17 @@ RDD-[YYYY]-[NNN]
 - ソフトウェアインターフェース (Software Interfaces)
 - ハードウェアインターフェース (Hardware Interfaces)
 - 通信インターフェース (Communications Interfaces)
+
+### 4.2. データ要件 (Data Requirements)
+
+- データモデル (Data Model)
+  - ※詳細は `database_entity_template.md`
+    を参照し、以下にエンティティをリストしてください。
+  - 例: ENT-001 (ユーザー), ENT-002 (商品)
+- データ辞書 (Data Dictionary)
+
+## 5. 非機能要件 (Non-Functional Requirements)
+
+- ※詳細は `non_functional_requirement_template.md`
+  を参照し、以下に非機能要件をリストしてください。
+- 例: NFR-001 (応答速度), NFR-002 (データ保全性)
