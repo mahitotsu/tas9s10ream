@@ -60,5 +60,3 @@ RDD-[YYYY]-[NNN]
 - ソフトウェアインターフェース (Software Interfaces)
 - ハードウェアインターフェース (Hardware Interfaces)
 - 通信インターフェース (Communications Interfaces)
-
-## 8. 用語集 (Glossary)
