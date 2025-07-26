@@ -81,6 +81,7 @@ Webアプリケーションとして提供されること。
 - [UC-015 (タスクを検索・フィルタリングする)](./use-cases/uc-015-search-filter-tasks.md)
 - [UC-016 (レポートを生成・閲覧する)](./use-cases/uc-016-generate-view-reports.md)
 - [UC-017 (パスワードをリセットする)](./use-cases/uc-017-reset-password.md)
+- [UC-018 (タスク詳細を編集する)](./use-cases/uc-018-edit-task-details.md)
 
 ## 4. 機能要件 (Functional Requirements)
 
