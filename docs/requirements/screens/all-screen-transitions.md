@@ -11,7 +11,7 @@ graph TD
     subgraph 認証フロー
         Start[システム起動時/ログアウト後] --> SCR001[SCR-001: ログイン画面]
         SCR001 -->|ログイン成功| SCR002[SCR-002: インボックス画面]
-        SCR001 -->|パスワードを忘れた場合| PasswordReset[パスワードリセット画面]
+        SCR001 -->|パスワードを忘れた場合| SCR019[SCR-019: パスワードリセット画面]
     end
 
     subgraph メイン機能フロー
@@ -30,10 +30,10 @@ graph TD
         SCR008 -->|プロジェクト検索結果選択| SCR009
         SCR008 -->|成果物検索結果選択| SCR012[SCR-012: 成果物管理画面]
         SCR009 -->|タスク選択| SCR007
-        SCR009 -->|成果物選択| SCR012
+        SCR009 -->|成果物選択| SCR020[SCR-020: 成果物詳細画面]
         SCR009 -->|進捗ダッシュボード| SCR015[SCR-015: リアルタイム進捗ダッシュボード画面]
-        SCR012 -->|成果物選択| ArtifactDetail[成果物詳細画面]
-        SCR013[SCR-013: 変更要求管理画面] -->|変更要求選択| ChangeRequestDetail[変更要求詳細画面]
+        SCR012 -->|成果物選択| SCR020[SCR-020: 成果物詳細画面]
+        SCR013[SCR-013: 変更要求管理画面] -->|変更要求選択| SCR021[SCR-021: 変更要求詳細画面]
         SCR013 -->|影響範囲分析ボタンクリック| SCR014
         SCR014 -->|変更要求管理画面から| SCR013
     end
@@ -69,10 +69,9 @@ graph TD
     style SCR016 fill:#bbf,stroke:#333,stroke-width:2px
     style SCR017 fill:#bbf,stroke:#333,stroke-width:2px
     style SCR018 fill:#bbf,stroke:#333,stroke-width:2px
-    style PasswordReset fill:#f9f,stroke:#333,stroke-width:2px
-    style NewProjectCreation fill:#bbf,stroke:#333,stroke-width:2px
-    style ArtifactDetail fill:#bbf,stroke:#333,stroke-width:2px
-    style ChangeRequestDetail fill:#bbf,stroke:#333,stroke-width:2px
+    style SCR019 fill:#f9f,stroke:#333,stroke-width:2px
+    style SCR020 fill:#bbf,stroke:#333,stroke-width:2px
+    style SCR021 fill:#bbf,stroke:#333,stroke-width:2px
     style NavMenu fill:#ddd,stroke:#333,stroke-width:2px
     style Start fill:#eee,stroke:#333,stroke-width:2px
 ```

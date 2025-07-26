@@ -50,6 +50,7 @@ GTDの主要な5つのワークフロー（収集、処理、整理、省察、�
 - [BF-004 (週次レビューフロー)](./business-flows/bf-004-weekly-review-flow.md)
 - [BF-005 (タスク実行フロー)](./business-flows/bf-005-task-execution-flow.md)
 - [BF-006 (既存ツール連携フロー)](./business-flows/bf-006-existing-tool-integration-flow.md)
+- [BF-007 (パスワードリセットフロー)](./business-flows/bf-007-password-reset-flow.md)
 
 ### 一般的な制約 (General Constraints)
 
@@ -79,6 +80,7 @@ Webアプリケーションとして提供されること。
 - [UC-014 (システム通知を設定する)](./use-cases/uc-014-configure-notifications.md)
 - [UC-015 (タスクを検索・フィルタリングする)](./use-cases/uc-015-search-filter-tasks.md)
 - [UC-016 (レポートを生成・閲覧する)](./use-cases/uc-016-generate-view-reports.md)
+- [UC-017 (パスワードをリセットする)](./use-cases/uc-017-reset-password.md)
 
 ## 4. 機能要件 (Functional Requirements)
 
@@ -163,6 +165,9 @@ Webアプリケーションとして提供されること。
 - [SCR-016 (既存ツール連携詳細設定画面)](./screens/scr-016-external-tool-integration-settings-screen.md)
 - [SCR-017 (ユーザー管理画面)](./screens/scr-017-user-management-screen.md)
 - [SCR-018 (新規プロジェクト作成画面)](./screens/scr-018-new-project-creation-screen.md)
+- [SCR-019 (パスワードリセット画面)](./screens/scr-019-password-reset-screen.md)
+- [SCR-020 (成果物詳細画面)](./screens/scr-020-artifact-detail-screen.md)
+- [SCR-021 (変更要求詳細画面)](./screens/scr-021-change-request-detail-screen.md)
 
 #### ソフトウェアインターフェース (Software Interfaces)
 
