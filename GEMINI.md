@@ -2,6 +2,9 @@
 
 <!-- Add any project-specific instructions or context here. -->
 
+**Gemini CLI運用ガイドライン:**
+このプロジェクトでファイルを生成または修正する際は、`GEMINI.md`およびそれに記載されているすべてのプロジェクト標準、ガイドライン、スタイルガイドを常に能動的に参照し、厳密に遵守すること。
+
 ## Git コミットメッセージの規約
 
 このプロジェクトでは、[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
