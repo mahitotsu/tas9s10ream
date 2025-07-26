@@ -27,6 +27,37 @@ ITプロジェクト管理者が、システムに登録されているユーザ
 1. システムはユーザーの操作に基づいてユーザー情報、ロール、または権限を更新する。
 1. システムは操作完了をユーザーに通知する。
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+
+    User->>System: ユーザー管理画面にアクセス
+    System->>User: 登録されているユーザーの一覧を表示
+    alt 新しいユーザーを登録
+        User->>System: ユーザー情報と初期ロール・権限を入力し、「登録」ボタンをクリック
+        System->>System: ユーザー情報を検証
+        alt 入力情報が有効
+            System->>System: 新しいユーザーを登録
+            System-->>User: 操作完了を通知
+        else 入力情報が無効
+            System-->>User: エラーメッセージを表示 (再入力を促す)
+        end
+    alt 既存ユーザーの情報を更新
+        User->>System: ユーザーを選択し、情報を編集後、「更新」ボタンをクリック
+        System->>System: ユーザー情報を更新
+        System-->>User: 操作完了を通知
+    alt 既存ユーザーのロール・権限を変更
+        User->>System: ユーザーを選択し、新しいロール・権限を設定後、「保存」ボタンをクリック
+        System->>System: ロール・権限を更新
+        System-->>User: 操作完了を通知
+    alt 既存ユーザーを削除
+        User->>System: ユーザーを選択し、「削除」ボタンをクリック
+        System->>System: ユーザーを削除
+        System-->>User: 操作完了を通知
+    end
+```
+
 ### 代替フロー
 
 - なし

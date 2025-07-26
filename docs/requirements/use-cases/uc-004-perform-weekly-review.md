@@ -32,6 +32,22 @@
 1. ユーザーはレビュー結果に基づいてタスクやプロジェクトの状態を更新する。
 1. システムは週次レビューの完了を記録する。
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+
+    User->>System: 週次レビュー画面にアクセス
+    System->>User: チェックリストとレビュー対象を表示
+    loop 各レビュー項目
+        User->>System: 項目を確認し、必要に応じて更新
+        System->>System: タスク/プロジェクトの状態を更新
+    end
+    User->>System: レビュー完了を指示
+    System->>System: 週次レビューの完了を記録
+    System-->>User: レビュー完了通知
+```
+
 ### 代替フロー
 
 - なし

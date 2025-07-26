@@ -23,6 +23,27 @@
 1. システムは入力されたタスクをインボックスに保存する。
 1. システムはタスクの収集完了をユーザーに通知する。
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+
+    User->>System: インボックス画面でタスク情報を入力
+    User->>System: 「保存」ボタンをクリック
+    System->>System: 入力されたタスクを検証
+    alt 入力情報が有効
+        System->>System: タスクをインボックスに保存
+        System-->>User: タスク収集完了を通知
+    else 入力情報が不足
+        System-->>User: エラーメッセージを表示 (再入力を促す)
+    end
+    alt タスク保存成功
+        System-->>User: タスク保存完了通知
+    else タスク保存失敗 (システムエラー)
+        System-->>User: エラー通知 (再試行を促す)
+    end
+```
+
 ### 代替フロー
 
 - なし

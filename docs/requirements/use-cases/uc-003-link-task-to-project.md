@@ -27,6 +27,32 @@
 1. システムはタスクをプロジェクトに紐付け、プロジェクト情報を更新する。
 1. システムは紐付け完了をユーザーに通知する。
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+
+    User->>System: プロジェクトに紐付けたいタスクを選択
+    User->>System: 「プロジェクトに紐付ける」オプションを選択
+    System->>User: 既存のプロジェクトリストを表示
+    alt 既存プロジェクトを選択
+        User->>System: 既存プロジェクトを選択し、「紐付け」ボタンをクリック
+        System->>System: タスクをプロジェクトに紐付け、プロジェクト情報を更新
+    else 新規プロジェクトを作成
+        User->>System: 「新規プロジェクト作成」を選択し、プロジェクト名などを入力
+        alt プロジェクト情報が有効
+            System->>System: 新規プロジェクトを作成し、タスクを紐付け
+        else プロジェクト情報不足
+            System-->>User: エラーメッセージを表示 (再入力を促す)
+        end
+    end
+    alt 紐付け成功
+        System-->>User: 紐付け完了を通知
+    else 紐付け失敗 (システムエラー)
+        System-->>User: エラー通知 (再試行を促す)
+    end
+```
+
 ### 代替フロー
 
 - なし

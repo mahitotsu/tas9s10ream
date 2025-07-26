@@ -29,6 +29,23 @@
 1. システムはユーザーの通知設定を更新する。
 1. システムは設定完了をユーザーに通知する。
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+
+    User->>System: 通知設定画面にアクセス
+    System->>User: 現在の通知設定を表示
+    User->>System: 通知の有効/無効、種類、方法、頻度/時間帯を設定
+    User->>System: 「保存」ボタンをクリック
+    System->>System: ユーザーの通知設定を更新
+    alt 設定更新成功
+        System-->>User: 設定完了を通知
+    else 設定更新失敗 (システムエラー)
+        System-->>User: エラー通知 (再試行を促す)
+    end
+```
+
 ### 代替フロー
 
 - なし

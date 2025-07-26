@@ -26,6 +26,30 @@ ITプロジェクト管理者が、プロジェクトに対する要求変更を
 1. ユーザーは影響範囲を確認し、必要に応じてプロジェクト計画を更新する。
 1. システムは変更要求のステータス更新をユーザーに通知する。
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+    actor Approver
+
+    User->>System: 変更要求管理画面にアクセス
+    User->>System: 新しい変更要求情報を入力
+    User->>System: 変更要求を承認ワークフローに提出
+    System->>System: 変更要求を登録し、承認ワークフローを開始
+    System->>Approver: 変更要求の承認を依頼
+    Approver->>System: 変更要求を承認または却下
+    alt 変更要求が承認された場合
+        System->>System: 変更要求の影響範囲を分析
+        System->>User: 影響範囲と関連するタスク、成果物、スケジュールへの影響を提示
+        User->>System: 影響範囲を確認し、必要に応じてプロジェクト計画を更新
+        System->>System: 変更要求のステータスを更新
+        System-->>User: 変更要求のステータス更新を通知
+    else 変更要求が却下された場合
+        System->>System: 変更要求のステータスを却下済みに更新
+        System-->>User: 変更要求の却下を通知
+    end
+```
+
 ### 代替フロー
 
 - なし

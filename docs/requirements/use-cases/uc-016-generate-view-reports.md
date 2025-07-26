@@ -24,6 +24,27 @@ ITプロジェクト管理者が、プロジェクトの進捗、タスク履歴
 1. システムは生成されたレポートを画面に表示する。
 1. ユーザーはレポートの内容を確認し、必要に応じてPDFやCSV形式でダウンロードする。
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+
+    User->>System: レポート画面にアクセス
+    User->>System: レポートの種類と条件を選択
+    User->>System: 「レポート生成」ボタンをクリック
+    System->>System: 選択された条件に基づいてデータを集計・分析
+    alt レポート生成成功
+        System->>User: 生成されたレポートを画面に表示
+        User->>System: レポートの内容を確認
+        opt ダウンロードが必要な場合
+            User->>System: PDF/CSV形式でダウンロードを要求
+            System-->>User: レポートファイルを送信
+        end
+    else レポート生成失敗 (データ不足/システムエラー)
+        System-->>User: エラー通知または警告メッセージを表示
+    end
+```
+
 ### 代替フロー
 
 - なし

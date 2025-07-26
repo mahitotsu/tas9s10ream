@@ -27,6 +27,25 @@
 1. システムはタスクの優先順位を更新する。
 1. システムは優先順位更新完了をユーザーに通知する。
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+
+    User->>System: タスク一覧/プロジェクト詳細画面にアクセス
+    User->>System: AIによる優先順位付けレコメンデーションを要求
+    System->>System: タスクデータを分析し、AIレコメンデーションを生成
+    alt レコメンデーション生成成功
+        System->>User: レコメンデーションされた優先順位を提示
+        User->>System: レコメンデーションを確認し、必要に応じて手動で調整
+        User->>System: 「優先順位を適用」ボタンをクリック
+        System->>System: タスクの優先順位を更新
+        System-->>User: 優先順位更新完了を通知
+    else レコメンデーション生成失敗
+        System-->>User: エラー通知 (手動設定を促す)
+    end
+```
+
 ### 代替フロー
 
 - なし

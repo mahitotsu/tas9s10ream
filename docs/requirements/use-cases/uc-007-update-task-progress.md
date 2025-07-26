@@ -25,6 +25,30 @@
 1. システムは関連する進捗ダッシュボードをリアルタイムで更新する。
 1. システムは進捗更新完了をユーザーに通知する。
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+
+    User->>System: タスク一覧/詳細画面からタスクを選択
+    System->>User: 選択されたタスクの詳細を表示
+    User->>System: 進捗状況、進捗率、コメントを入力
+    User->>System: 「更新」ボタンをクリック
+    System->>System: 入力された進捗情報を検証
+    alt 入力情報が有効
+        System->>System: タスクの進捗情報を更新
+        System->>System: 関連する進捗ダッシュボードをリアルタイムで更新
+        System-->>User: 進捗更新完了を通知
+    else 入力情報が無効
+        System-->>User: エラーメッセージを表示 (再入力を促す)
+    end
+    alt 進捗更新成功
+        System-->>User: 進捗更新完了通知
+    else 進捗更新失敗 (システムエラー)
+        System-->>User: エラー通知 (再試行を促す)
+    end
+```
+
 ### 代替フロー
 
 - なし

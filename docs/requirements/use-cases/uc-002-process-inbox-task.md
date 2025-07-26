@@ -31,6 +31,37 @@
 1. システムは選択された処理に基づいてタスクの状態と所属を更新する。
 1. システムは処理完了をユーザーに通知する。
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+
+    User->>System: インボックス画面で未処理タスクを選択
+    System->>User: 選択されたタスクの詳細を表示
+    User->>System: タスクの処理を選択 (例: 「今すぐ実行」)
+    alt 2分以内で完了
+        User->>System: 「今すぐ実行」を選択
+        System->>System: タスクを完了としてマーク
+    alt 委任
+        User->>System: 「委任」を選択し、担当者と期限を設定
+        System->>System: 連絡待ちリストに追加
+    alt 後で実行 (プロジェクトに紐付け)
+        User->>System: 「後で実行」を選択し、プロジェクトを選択/作成
+        System->>System: タスクをプロジェクトに紐付け
+    alt 後で実行 (次の行動リストに追加)
+        User->>System: 「後で実行」を選択し、コンテキストと期限を設定
+        System->>System: 次の行動リストに追加
+    alt 後で実行 (いつか/多分リストに追加)
+        User->>System: 「後で実行」を選択
+        System->>System: いつか/多分リストに追加
+    alt 不要
+        User->>System: 「削除」を選択
+        System->>System: タスクを削除
+    end
+    System->>System: タスクの状態と所属を更新
+    System-->>User: 処理完了を通知
+```
+
 ### 代替フロー
 
 - なし

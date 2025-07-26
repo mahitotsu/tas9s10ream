@@ -23,6 +23,25 @@ ITプロジェクト管理者が、リアルタイムで更新される進捗ダ
 1. ユーザーは必要に応じて、特定のタスクやプロジェクトにドリルダウンして詳細情報を確認する。
 1. システムは定期的にダッシュボードの情報を更新する。
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+
+    User->>System: リアルタイム進捗ダッシュボード画面にアクセス
+    System->>System: プロジェクトデータをリアルタイムで集計・分析
+    System->>User: 視覚的なダッシュボードを表示
+    User->>System: ダッシュボード上のウィジェットやグラフを確認
+    alt 特定のタスク/プロジェクトにドリルダウン
+        User->>System: ドリルダウンを要求
+        System->>User: 詳細情報を表示
+    end
+    loop 定期的な更新
+        System->>System: ダッシュボード情報を更新
+        System-->>User: ダッシュボードを再描画
+    end
+```
+
 ### 代替フロー
 
 - なし

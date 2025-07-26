@@ -25,6 +25,35 @@
 1. システムは外部ツールからデータを取得し、Tas9s10reamのデータモデルに合わせて変換し、インポートする。
 1. システムはインポートの完了または失敗をユーザーに通知し、インポート結果のサマリーを表示する。
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+    participant ExternalTool
+
+    User->>System: 設定画面にアクセス
+    User->>System: 既存ツール連携設定画面に移動
+    User->>System: 外部ツールを選択し、認証情報を入力
+    System->>ExternalTool: 認証情報を使用して接続を試みる
+    alt 接続成功
+        ExternalTool-->>System: 接続成功
+        System->>User: インポート範囲とマッピングルール設定画面を表示
+        User->>System: インポート範囲とマッピングルールを設定
+        User->>System: インポートを実行
+        System->>ExternalTool: データ取得リクエスト
+        ExternalTool-->>System: データ応答
+        System->>System: データ変換とインポート
+        alt インポート成功
+            System-->>User: インポート完了通知とサマリーを表示
+        else インポート失敗
+            System-->>User: インポート失敗通知
+        end
+    else 接続失敗 (認証情報無効/接続エラー)
+        ExternalTool-->>System: 接続失敗
+        System-->>User: エラーメッセージを表示 (再入力を促す/エラー通知)
+    end
+```
+
 ### 代替フロー
 
 - なし

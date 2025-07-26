@@ -24,6 +24,30 @@
 1. タスクが完了したら、ユーザーはシステム上でタスクを完了としてマークする。
 1. システムはタスクの完了を記録し、関連する進捗ダッシュボードを更新する。
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+
+    User->>System: 「次の行動リスト」画面にアクセス
+    User->>System: コンテキストに基づいてタスクをフィルタリング/選択
+    User->>System: 選択したタスクの詳細を確認し、実行を開始
+    alt タスクが完了
+        User->>System: タスクを完了としてマーク
+        System->>System: タスクの完了を記録
+        System->>System: 進捗ダッシュボードを更新
+        System-->>User: タスク完了通知
+    else タスクを中断
+        User->>System: タスクを一時停止
+        System->>System: タスクの状態を保存
+        System-->>User: タスク一時停止通知
+    else タスクを完了できない
+        User->>System: タスクを再分類または削除
+        System->>System: タスクの状態を更新
+        System-->>User: タスク更新通知
+    end
+```
+
 ### 代替フロー
 
 - **タスクの中断**: タスクの実行中に中断が必要になった場合、ユーザーはタスクを一時停止し、後で再開できるように状態を保存する。
