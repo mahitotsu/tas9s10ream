@@ -18,13 +18,19 @@
 
 ### 基本フロー
 
-1. [ステップ1の記述]
-1. [ステップ2の記述]
+[ユースケースの基本フローを記述します。ユースケース図（Mermaid記法
+sequenceDiagram）を**必須**とします。これにより、システムとユーザーのインタラクションを明確に示し、理解を深めることができます。]
 
-- [サブステップ2-1]
-- [サブステップ2-2]
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
 
-1. [ステップ3の記述]
+    User->>System: アクション1
+    System->>User: レスポンス1
+    User->>System: アクション2
+    System->>User: レスポンス2
+```
 
 ### 代替フロー
 
