@@ -147,7 +147,6 @@ Webアプリケーションとして提供されること。
 - [SCR-016 (既存ツール連携詳細設定画面)](./screens/scr-016-external-tool-integration-settings-screen.md)
 - [SCR-017 (ユーザー管理画面)](./screens/scr-017-user-management-screen.md)
 - [SCR-018 (新規プロジェクト作成画面)](./screens/scr-018-new-project-creation-screen.md)
-
 - [SCR-001 (ログイン画面)](./screens/scr-001-login-screen.md)
 - [SCR-002 (インボックス画面)](./screens/scr-002-inbox-screen.md)
 - [SCR-003 (プロジェクト一覧画面)](./screens/scr-003-project-list-screen.md)
