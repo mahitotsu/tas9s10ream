@@ -203,7 +203,7 @@ erDiagram
         VARCHAR(255) snapshot_id PK
         VARCHAR(255) project_id FK
         DATETIME timestamp
-        DECIMAL(5,2) overall_progress
+        DECIMAL overall_progress
         INT completed_tasks_count
         INT remaining_tasks_count
         TEXT bottleneck_tasks
