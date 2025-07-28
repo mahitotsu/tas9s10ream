@@ -1,0 +1,74 @@
+# ID: RDD-UCA-2025-010
+
+# ユースケース: 成果物とタスクの依存関係を可視化する
+
+## 概要
+
+ユーザーがプロジェクト内の成果物と、それに関連するタスク間の依存関係を視覚的に確認します。これにより、プロジェクトの構造とボトルネックを把握しやすくなります。
+
+### アクター
+
+- 主アクター:
+  [ACT-001 (ITプロジェクトメンバー)](../actors/act-001-it-project-member.md)
+- 副アクター:
+  [ACT-002 (ITプロジェクト管理者)](../actors/act-002-it-project-manager.md)
+
+### 事前条件
+
+- ユーザーがシステムにログインしていること。
+- 成果物とタスクがシステムに登録されており、関連付けられていること。
+
+### 基本フロー
+
+1. ユーザーは成果物管理画面、またはプロジェクト詳細画面にアクセスする。
+1. ユーザーは依存関係を可視化したい成果物またはプロジェクトを選択する。
+1. システムは選択された成果物と、それに依存するタスク、またはその成果物が依存するタスクを抽出し、グラフ形式で表示する。
+1. ユーザーはグラフ上で依存関係を確認し、必要に応じて各要素（成果物、タスク）の詳細情報を表示する。
+
+成果物とタスクの依存関係を可視化するユースケースのシーケンスを示します。
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+
+    User->>System: 成果物管理/プロジェクト詳細画面にアクセス
+    User->>System: 依存関係を可視化したい成果物/プロジェクトを選択
+    System->>System: 成果物とタスクの依存関係を抽出
+    alt 依存関係データが存在
+        System->>User: グラフ形式で依存関係を表示
+        User->>System: グラフ上で依存関係を確認し、詳細情報を表示
+        System-->>User: 詳細情報を表示
+    else 依存関係データが不足
+        System-->>User: 警告メッセージを表示 (部分的な可視化/可視化不可)
+    end
+```
+
+### 代替フロー
+
+- なし
+
+### 例外フロー
+
+- **データ不足**: 依存関係情報が不足している場合、システムは警告メッセージを表示し、部分的な可視化を行うか、可視化できない旨を通知する。
+- **システムエラー**: システムが依存関係の可視化に失敗した場合、システムはエラーを通知し、ユーザーは再試行できる。
+
+### 事後条件
+
+- 成果物とタスクの依存関係が視覚的に表示されていること。
+
+### 関連する機能要件
+
+- [FR-011 (成果物依存関係可視化機能)](../functional-requirements/fr-011-artifact-dependency-visualization-function.md)
+- [FR-009 (成果物管理機能)](../functional-requirements/fr-009-artifact-management-function.md)
+- [FR-010 (タスク依存関係管理機能)](../functional-requirements/fr-010-task-dependency-management-function.md)
+
+### 関連する業務フロー
+
+- [BF-003 (タスク整理フロー)](../business-flows/bf-003-task-organization-flow.md)
+
+### 関連する画面
+
+- [SCR-012 (成果物管理画面)](../screens/scr-012-artifact-management-screen.md)
+- [SCR-009 (プロジェクト詳細画面)](../screens/scr-009-project-detail-screen.md)
+- [SCR-020 (成果物詳細画面)](../screens/scr-020-artifact-detail-screen.md)

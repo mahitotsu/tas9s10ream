@@ -1,0 +1,69 @@
+# ID: RDD-SCR-2025-015
+
+# 画面: リアルタイム進捗ダッシュボード画面
+
+## 画面概要
+
+本画面は、プロジェクトの進捗状況をリアルタイムで可視化し、主要なメトリクス、ボトルネック、遅延リスクなどを一目で把握できるようにするためのダッシュボード画面です。
+
+### 画面遷移
+
+```mermaid
+graph TD
+    NavMenu[ナビゲーションメニュー] --> SCR015[SCR-015: リアルタイム進捗ダッシュボード画面]
+```
+
+### 画面レイアウト
+
+- 複数のウィジェット（グラフ、数値表示、リストなど）で構成される。
+- 主要なメトリクス（例: 全体進捗率、完了タスク数、残タスク数、ボトルネックタスク）が表示される。
+- プロジェクト選択ドロップダウン。
+- データ更新頻度表示。
+
+### 入力項目
+
+- プロジェクト選択: ドロップダウン, [プロジェクト一覧],
+  [全て], 任意, 表示するプロジェクトを絞り込む
+
+### 表示項目
+
+- 全体進捗率: 数値, [パーセンテージ], プロジェクト全体の完了度
+- 完了タスク数: 数値, [なし], 完了したタスクの総数
+- 残タスク数: 数値, [なし], 未完了のタスクの総数
+- ボトルネックタスク: リスト形式,
+  [なし], 進捗を阻害している可能性のあるタスクのリスト
+- 遅延リスクタスク: リスト形式, [なし], 期日遅延の可能性が高いタスクのリスト
+- リソース配分グラフ: グラフ形式, [なし], チームメンバーごとのタスク割り当て状況
+- 予算消費状況: 数値/グラフ, [なし], プロジェクトの予算消費状況
+- 計画乖離アラート: 文字列,
+  [なし], 計画からの乖離を自動検出した場合の警告メッセージ
+
+### 操作とイベント
+
+- プロジェクト選択ドロップダウン変更: 選択されたプロジェクトのデータにダッシュボードを更新。
+- 各ウィジェット内の要素クリック: 関連する詳細画面（例: タスク詳細画面、プロジェクト詳細画面）へ遷移。
+- データ更新ボタンクリック: 最新のデータにダッシュボードを更新。
+
+### エラーメッセージ
+
+- [データ取得失敗]: 「データの取得に失敗しました。再度お試しください。」, 画面上部にメッセージを表示
+
+### 関連する機能要件
+
+- [FR-014 (リアルタイム進捗データ収集機能)](../functional-requirements/fr-014-realtime-progress-data-collection-function.md)
+- [FR-015 (リアルタイム進捗データ分析機能)](../functional-requirements/fr-015-realtime-progress-data-analysis-function.md)
+- [FR-016 (進捗ダッシュボード表示機能)](../functional-requirements/fr-016-progress-dashboard-display-function.md)
+- [FR-017 (ボトルネック・遅延リスク特定機能)](../functional-requirements/fr-017-bottleneck-delay-risk-identification-function.md)
+- [FR-018 (リソース配分表示機能)](../functional-requirements/fr-018-resource-allocation-display-function.md)
+- [FR-019 (予算消費表示機能)](../functional-requirements/fr-019-budget-consumption-display-function.md)
+- [FR-020 (計画乖離自動検出機能)](../functional-requirements/fr-020-plan-deviation-detection-function.md)
+- [FR-021 (ボトルネック・遅延リスクハイライト機能)](../functional-requirements/fr-021-bottleneck-delay-risk-highlight-function.md)
+
+### 関連する業務フロー
+
+- なし (情報参照)
+
+### 関連するユースケース
+
+- [UC-008 (プロジェクトの状況を確認する)](../use-cases/uc-008-check-project-status.md)
+- [UC-012 (リアルタイム進捗ダッシュボードでプロジェクト状況を把握する)](../use-cases/uc-012-realtime-progress-dashboard.md)

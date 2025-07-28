@@ -21,7 +21,7 @@
   を記述。各行は72文字で折り返し推奨。変更の「理由」と「方法」を説明。
 - **コミットの実行**: ユーザーからの指示があるまで、コミットは行いません。
 
-詳細なルールについては、[Git 操作ルール (ベストプラクティス)](./docs/rules/git-rules.md)
+詳細なルールについては、[Git 操作ルール (ベストプラクティス)](./docs/standards-and-templates/rules/git-rules.md)
 を参照してください。
 
 ## プロジェクト標準とガイドライン
@@ -30,7 +30,7 @@
 
 ### ドキュメント標準と作成ガイドライン
 
-ドキュメントの整合性と品質を確保するため、`docs/rules/documentation-rules.md`
+ドキュメントの整合性と品質を確保するため、`docs/standards-and-templates/rules/documentation-rules.md`
 にて以下の標準とガイドラインを定めています。
 
 - **ドキュメントの種類と目的**: 各開発フェーズで作成すべきドキュメント（要件定義書、設計書、テスト仕様書など）とその役割。
@@ -40,7 +40,7 @@
 
 ドキュメントの作成や修正を行う際は、これらの標準とガイドラインを厳守し、プロジェクト全体のドキュメント体系に沿った形で作業を進めてください。
 
-また、プロジェクト内で使用される専門用語や略語については、`docs/glossary.md`
+また、プロジェクト内で使用される専門用語や略語については、`docs/standards-and-templates/glossary.md`
 を参照し、その意味を正しく理解するよう努めてください。
 
 ドキュメント内のダイアグラムは、Mermaid記法を使用してください。
@@ -49,14 +49,14 @@
 
 プロジェクトのコード品質と一貫性を保つため、以下のスタイルガイドを定めています。
 
-- [Dockerfile スタイルガイド](./docs/rules/dockerfile-style-guide.md)
-- [Markdown スタイルガイド](./docs/rules/markdown-style-guide.md)
-- [シェルスクリプト コーディングスタイル](./docs/rules/shell-script-coding-style.md)
+- [Dockerfile スタイルガイド](./docs/standards-and-templates/rules/dockerfile-style-guide.md)
+- [Markdown スタイルガイド](./docs/standards-and-templates/rules/markdown-style-guide.md)
+- [シェルスクリプト コーディングスタイル](./docs/standards-and-templates/rules/shell-script-coding-style.md)
 
 ## 命名規約
 
 このプロジェクトでは、ファイル名やディレクトリ名には**ケバブケース (kebab-case)**
-を使用することを推奨します。命名規約の詳細については、`docs/rules/naming-conventions.md`を参照してください。この規約は、プロジェクト全体に適用されます。
+を使用することを推奨します。命名規約の詳細については、`docs/standards-and-templates/rules/naming-conventions.md`を参照してください。この規約は、プロジェクト全体に適用されます。
 
 例:
 
@@ -69,6 +69,6 @@
 
 ### Markdownファイルのリンティングについて
 
-Markdownファイルのリンティングルールについては、`docs/rules/markdown-style-guide.md`を参照してください。
+Markdownファイルのリンティングルールについては、`docs/standards-and-templates/rules/markdown-style-guide.md`を参照してください。
 
 これらのルールに従うことで、ドキュメントの品質と一貫性が保たれ、スムーズなコミットが可能になります。

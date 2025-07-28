@@ -1,0 +1,87 @@
+# ID: RDD-UCA-2025-006
+
+# ユースケース: 既存ツールからタスクをインポートする
+
+## 概要
+
+ユーザーが既存のプロジェクト管理ツールやタスク管理ツールから、タスクや情報をTas9s10reamにインポートします。
+
+### アクター
+
+- 主アクター:
+  [ACT-002 (ITプロジェクト管理者)](../actors/act-002-it-project-manager.md)
+
+### 事前条件
+
+- ユーザーがシステムにログインしていること。
+- 連携したい外部ツールのアカウント情報（APIキーなど）が準備されていること。
+
+### 基本フロー
+
+1. ユーザーは設定画面にアクセスし、既存ツール連携設定画面に移動する。
+1. ユーザーは連携したい外部ツールを選択し、必要な認証情報（APIキーなど）を入力する。
+1. システムは入力された認証情報を使用して外部ツールへの接続を試みる。
+1. 接続が成功した場合、ユーザーはインポートしたいタスクやプロジェクトの範囲、マッピングルールを設定する。
+1. ユーザーがインポートを実行する。
+1. システムは外部ツールからデータを取得し、Tas9s10reamのデータモデルに合わせて変換し、インポートする。
+1. システムはインポートの完了または失敗をユーザーに通知し、インポート結果のサマリーを表示する。
+
+既存ツールからタスクをインポートするユースケースのシーケンスを示します。
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant System
+    participant ExternalTool
+
+    User->>System: 設定画面にアクセス
+    User->>System: 既存ツール連携設定画面に移動
+    User->>System: 外部ツールを選択し、認証情報を入力
+    System->>ExternalTool: 認証情報を使用して接続を試みる
+    alt 接続成功
+        ExternalTool-->>System: 接続成功
+        System->>User: インポート範囲とマッピングルール設定画面を表示
+        User->>System: インポート範囲とマッピングルールを設定
+        User->>System: インポートを実行
+        System->>ExternalTool: データ取得リクエスト
+        ExternalTool-->>System: データ応答
+        System->>System: データ変換とインポート
+        alt インポート成功
+            System-->>User: インポート完了通知とサマリーを表示
+        else インポート失敗
+            System-->>User: インポート失敗通知
+        end
+    else 接続失敗 (認証情報無効/接続エラー)
+        ExternalTool-->>System: 接続失敗
+        System-->>User: エラーメッセージを表示 (再入力を促す/エラー通知)
+    end
+```
+
+### 代替フロー
+
+- なし
+
+### 例外フロー
+
+- **認証情報無効**: 認証情報が無効な場合、システムはエラーメッセージを表示し、再入力を促す。
+- **接続失敗**: 外部ツールとの接続に失敗した場合、システムはエラーを通知する。
+- **データ変換エラー**: データ変換中にエラーが発生した場合、システムはエラーを通知し、問題のあるデータをスキップまたはログに記録する。
+
+### 事後条件
+
+- 外部ツールからのタスクがTas9s10reamにインポートされていること。
+- インポート結果のサマリーがユーザーに表示されていること。
+
+### 関連する機能要件
+
+- [FR-022 (既存ツール連携設定機能)](../functional-requirements/fr-022-external-tool-integration-settings-function.md)
+- [FR-023 (タスクインポート機能)](../functional-requirements/fr-023-task-import-function.md)
+
+### 関連する業務フロー
+
+- [BF-006 (既存ツール連携フロー)](../business-flows/bf-006-existing-tool-integration-flow.md)
+
+### 関連する画面
+
+- [SCR-006 (設定画面)](../screens/scr-006-settings-screen.md)
+- [SCR-016 (既存ツール連携詳細設定画面)](../screens/scr-016-external-tool-integration-settings-screen.md)
