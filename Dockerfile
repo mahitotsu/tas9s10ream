@@ -18,10 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl -L https://github.com/mvdan/sh/releases/download/v3.8.0/shfmt_v3.8.0_linux_amd64 \
     -o /usr/local/bin/shfmt && \
     chmod +x /usr/local/bin/shfmt && \
-    curl -L https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64 \
-    -o /usr/local/bin/hadolint && \
-    chmod +x /usr/local/bin/hadolint && \
-    rm -rf /var/lib/apt/lists/*
+    curl -L https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64     -o /usr/local/bin/hadolint &&     chmod +x /usr/local/bin/hadolint &&     rm -rf /var/lib/apt/lists/*# Generate en_US.UTF-8 localeRUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/*     && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen     && locale-gen
 
 # Declare build arguments for HOST_UID and HOST_GID
 ARG HOST_UID=1000
@@ -40,6 +37,9 @@ RUN if ! getent group ${HOST_GID} >/dev/null; then \
 RUN npm install -g @google/gemini-cli
 
 # Switch to the new user
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+
 USER appuser
 
 # Install uv using pipx
