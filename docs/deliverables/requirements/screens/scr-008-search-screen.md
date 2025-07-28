@@ -19,9 +19,11 @@ graph TD
 ### 画面レイアウト
 
 - 上部に検索入力フィールドと検索ボタン。
+- 検索履歴/お気に入り検索UI。
 - その下に、検索対象（タスク、プロジェクト、成果物など）を選択するタブまたはフィルタオプション。
 - 選択された検索対象に応じたフィルタリングオプション（例: 期日、ステータス、担当者）。
 - 検索結果が一覧表示される。
+- 検索結果プレビューUI。
 
 ### 入力項目
 
@@ -54,6 +56,9 @@ graph TD
 
 - [FR-030 (タスク検索機能)](../functional-requirements/fr-030-task-search-function.md)
 - [FR-031 (タスクフィルタリング機能)](../functional-requirements/fr-031-task-filtering-function.md)
+- [FR-063 (自然言語検索機能)](../functional-requirements/fr-063-natural-language-search-function.md)
+- [FR-064 (検索履歴/お気に入り検索機能)](../functional-requirements/fr-064-search-history-favorite-search-function.md)
+- [FR-065 (検索結果プレビュー機能)](../functional-requirements/fr-065-search-result-preview-function.md)
 
 ### 関連する業務フロー
 

@@ -44,6 +44,20 @@ graph TD
     B -- 依存 --> K[タスク依存関係];
     D -- 進捗を持つ --> L[プロジェクト進捗スナップショット];
     A -- 設定する --> M[外部ツール連携];
+    N[システムログ] -- 記録 --> O[システムメトリクス];
+    N -- 記録 --> P[システムアラート];
+    O -- 生成 --> P;
+    A -- 解決 --> P;
+    Q[バックアップレコード] -- 記録 --> R[システムデータ];
+    A -- 実行 --> Q;
+    S[コストデータ] -- 記録 --> T[クラウド利用費];
+    D -- 関連 --> S;
+    U[システムドキュメント] -- 管理 --> V[ドキュメント内容];
+    A -- 作成/更新 --> U;
+    W[ヘルプコンテンツ] -- 提供 --> X[ユーザー];
+    Y[チュートリアル] -- 提供 --> X;
+    Z[監査ログ] -- 記録 --> A[システムイベント];
+    X -- 操作 --> Z;
 ```
 
 ### 2.1. 主要エンティティ (Key Entities)
@@ -74,6 +88,7 @@ erDiagram
     TASK ||--o{ ARTIFACT : "relates to"
     USER ||--o{ PROJECT : "manages"
     CONTEXT ||--o{ TASK : "applies to"
+    CONTEXT ||--o{ TASK : "applies to"
     USER ||--o{ NOTIFICATION : "receives"
     USER ||--o{ CHANGEREQUEST : "proposes"
     USER ||--o{ CHANGEREQUEST : "approves"
@@ -83,6 +98,15 @@ erDiagram
     TASK ||--o{ TASKDEPENDENCY : "succeeds"
     PROJECT ||--o{ PROJECTPROGRESSSNAPSHOT : "has snapshot"
     USER ||--o{ EXTERNALTOOLINTEGRATION : "configures"
+    SYSTEMLOG ||--o{ SYSTEMALERT : "related to"
+    SYSTEMMETRIC ||--o{ SYSTEMALERT : "related to"
+    USER ||--o{ SYSTEMALERT : "resolves"
+    USER ||--o{ BACKUPRECORD : "creates"
+    PROJECT ||--o{ COSTDATA : "incurs"
+    USER ||--o{ SYSTEMDOCUMENT : "manages"
+    HELPCONTENT ||--o{ USER : "provides to"
+    TUTORIAL ||--o{ USER : "provides to"
+    USER ||--o{ AUDITLOG : "generates"
 ```
 
 ### 3.1. エンティティ定義 (Entity Definitions)
@@ -100,6 +124,15 @@ erDiagram
 - [ENT-2025-011 (TaskDependency)](entities/task-dependency.md)
 - [ENT-2025-012 (ProjectProgressSnapshot)](entities/project-progress-snapshot.md)
 - [ENT-2025-013 (ExternalToolIntegration)](entities/external-tool-integration.md)
+- [ENT-2025-014 (SystemLog)](entities/system-log.md)
+- [ENT-2025-015 (SystemMetric)](entities/system-metric.md)
+- [ENT-2025-016 (SystemAlert)](entities/system-alert.md)
+- [ENT-2025-017 (BackupRecord)](entities/backup-record.md)
+- [ENT-2025-018 (CostData)](entities/cost-data.md)
+- [ENT-2025-019 (SystemDocument)](entities/system-document.md)
+- [ENT-2025-020 (HelpContent)](entities/help-content.md)
+- [ENT-2025-021 (Tutorial)](entities/tutorial.md)
+- [ENT-2025-022 (AuditLog)](entities/audit-log.md)
 
 ### 3.2. リレーションシップ定義 (Relationship Definitions)
 
@@ -222,6 +255,97 @@ erDiagram
         TEXT data_mapping_rules
         DATETIME last_sync_at
     }
+    system_logs {
+        VARCHAR(255) log_id PK
+        DATETIME timestamp
+        VARCHAR(50) level
+        VARCHAR(100) source
+        TEXT message
+        VARCHAR(255) user_id FK
+        VARCHAR(255) request_id
+        VARCHAR(50) ip_address
+        TEXT details
+    }
+    system_metrics {
+        VARCHAR(255) metric_id PK
+        DATETIME timestamp
+        VARCHAR(100) name
+        FLOAT value
+        VARCHAR(50) unit
+        VARCHAR(255) resource_id
+    }
+    system_alerts {
+        VARCHAR(255) alert_id PK
+        DATETIME timestamp
+        VARCHAR(100) type
+        TEXT message
+        VARCHAR(50) severity
+        VARCHAR(50) status
+        VARCHAR(255) related_log_id FK
+        VARCHAR(255) related_metric_id FK
+        DATETIME resolved_at
+        VARCHAR(255) resolved_by FK
+    }
+    backup_records {
+        VARCHAR(255) backup_id PK
+        DATETIME backup_time
+        VARCHAR(50) status
+        VARCHAR(50) type
+        TEXT location
+        BIGINT size_bytes
+        VARCHAR(255) created_by FK
+        TEXT error_message
+    }
+    cost_data {
+        VARCHAR(255) cost_id PK
+        DATE date
+        VARCHAR(100) service_name
+        DECIMAL amount
+        VARCHAR(10) currency
+        VARCHAR(255) resource_id
+        VARCHAR(255) project_id FK
+    }
+    system_documents {
+        VARCHAR(255) document_id PK
+        VARCHAR(255) title
+        VARCHAR(50) version
+        TEXT content_path
+        VARCHAR(50) type
+        VARCHAR(50) status
+        DATETIME created_at
+        DATETIME updated_at
+        VARCHAR(255) created_by FK
+        VARCHAR(255) updated_by FK
+    }
+    help_contents {
+        VARCHAR(255) help_id PK
+        VARCHAR(255) title
+        TEXT content
+        VARCHAR(100) category
+        VARCHAR(255) related_screen_id
+        TEXT keywords
+        DATETIME created_at
+        DATETIME updated_at
+    }
+    tutorials {
+        VARCHAR(255) tutorial_id PK
+        VARCHAR(255) title
+        TEXT description
+        TEXT steps
+        VARCHAR(100) type
+        DATETIME created_at
+        DATETIME updated_at
+    }
+    audit_logs {
+        VARCHAR(255) audit_id PK
+        DATETIME timestamp
+        VARCHAR(255) user_id FK
+        VARCHAR(100) operation_type
+        VARCHAR(100) entity_type
+        VARCHAR(255) entity_id
+        TEXT details
+        VARCHAR(50) ip_address
+    }
 
     users ||--o{ tasks : "has"
     tasks ||--o{ subtasks : "includes"
@@ -238,6 +362,15 @@ erDiagram
     tasks ||--o{ task_dependencies : "succeeds"
     projects ||--o{ project_progress_snapshots : "has snapshot"
     users ||--o{ external_tool_integrations : "configures"
+    system_logs ||--o{ system_alerts : "related to"
+    system_metrics ||--o{ system_alerts : "related to"
+    users ||--o{ system_alerts : "resolves"
+    users ||--o{ backup_records : "creates"
+    projects ||--o{ cost_data : "incurs"
+    users ||--o{ system_documents : "manages"
+    help_contents ||--o{ users : "provides to"
+    tutorials ||--o{ users : "provides to"
+    users ||--o{ audit_logs : "generates"
 ```
 
 ### 4.1. テーブル定義 (Table Definitions)
@@ -257,6 +390,15 @@ erDiagram
 - [task_dependencies テーブル](entities/task-dependency.md)
 - [project_progress_snapshots テーブル](entities/project-progress-snapshot.md)
 - [external_tool_integrations テーブル](entities/external-tool-integration.md)
+- [system_logs テーブル](entities/system-log.md)
+- [system_metrics テーブル](entities/system-metric.md)
+- [system_alerts テーブル](entities/system-alert.md)
+- [backup_records テーブル](entities/backup-record.md)
+- [cost_data テーブル](entities/cost-data.md)
+- [system_documents テーブル](entities/system-document.md)
+- [help_contents テーブル](entities/help-content.md)
+- [tutorials テーブル](entities/tutorial.md)
+- [audit_logs テーブル](entities/audit-log.md)
 
 ## 5. データ辞書 (Data Dictionary)
 
@@ -313,6 +455,35 @@ graph TD
         CC --> DD{進捗データ分析};
         DD --> EE[進捗ダッシュボード表示];
         EE --> E;
+
+        FF[システムメトリクス収集] --> GG[システムメトリクスデータベース];
+        GG --> HH{システム稼働状況監視};
+        HH --> II[システムアラートデータベース];
+        II --> E;
+
+        JJ[ログ収集] --> KK[システムログデータベース];
+        KK --> LL{ログ管理機能};
+        LL --> E;
+
+        MM[バックアップ実行] --> NN[バックアップレコードデータベース];
+        NN --> E;
+
+        OO[コストデータ収集] --> PP[コストデータデータベース];
+        PP --> QQ{コスト分析機能};
+        QQ --> E;
+
+        RR[ドキュメント管理] --> SS[システムドキュメントデータベース];
+        SS --> E;
+
+        TT[ヘルプコンテンツ管理] --> UU[ヘルプコンテンツデータベース];
+        UU --> E;
+
+        VV[チュートリアル管理] --> WW[チュートリアルデータベース];
+        WW --> E;
+
+        XX[監査ログ収集] --> YY[監査ログデータベース];
+        YY --> ZZ{監査ログ管理機能};
+        ZZ --> E;
     end
 
     style A fill:#f9f,stroke:#333,stroke-width:2px
@@ -339,7 +510,25 @@ graph TD
 - **バックアップとリカバリ**: 毎日自動でデータベースのフルバックアップを取得し、オフサイトに保存する。障害発生時には24時間以内にデータを復旧できる体制を確立する。
 - **監査ログ**: 重要なデータ操作（作成、更新、削除、アクセス）については、操作日時、操作ユーザー、操作内容を監査ログとして記録し、不正アクセスやデータ改ざんの追跡を可能にする。
 
-## 9. 備考 (Notes)
+## 9. データパフォーマンス要件 (Data Performance Requirements)
+
+システムの応答時間とスループットを最適化するためのデータ設計に関する要件を記述します。
+
+- **インデックス戦略**: 頻繁に検索されるカラムや結合条件に使用されるカラムには、適切なインデックスを定義する。特に、外部キーにはインデックスを付与することを検討する。
+- **クエリ最適化**: 複雑なクエリや大量のデータを扱うクエリについては、実行計画を分析し、最適化を行う。必要に応じて、ビューやマテリアライズドビューを活用する。
+- **データ構造の検討**: データの読み書きパターンに応じて、非正規化や集約データの利用を検討する。例えば、リアルタイムダッシュボード表示のために、集計結果を別途保存する。
+- **キャッシュ戦略**: 頻繁にアクセスされるが更新頻度の低いデータについては、アプリケーションレベルまたはデータベースレベルでのキャッシュを導入し、データベースへの負荷を軽減する。
+
+## 10. データスケーラビリティ要件 (Data Scalability Requirements)
+
+システムがユーザー数やデータ量、トランザクションの増加といった需要の変動に対応できるよう、データ層の拡張性に関する要件を記述します。
+
+- **水平スケーリング**: データベースの負荷分散のため、リードレプリカの導入や、将来的にはシャーディング（データ分割）を検討する。
+- **データベーススケーリング**: データベースの垂直スケーリング（リソース増強）だけでなく、水平スケーリング（ノード追加）を容易にする設計とする。
+- **キューイング/非同期処理**: 大量のデータ処理や時間のかかる処理（例: レポート生成、データインポート/エクスポート）は、キューイングシステムを介した非同期処理とし、メインシステムの応答性を維持する。
+- **マイクロサービス/モジュラーアーキテクチャ**: 各機能が独立してスケールできるよう、疎結合なアーキテクチャを検討する。データモデルも、各サービスが責任を持つデータ範囲を明確にする。
+
+## 11. 備考 (Notes)
 
 - 今後の機能拡張として、タスク間の依存関係管理機能の追加を検討する。
 - 大規模データに対応するため、データベースのシャーディングやレプリケーションの導入を将来的に検討する。

@@ -57,7 +57,7 @@ graph TD
 
 ### 関連する業務フロー
 
-- [BF-004 (週次レビューフロー)](../business-flows/bf-004-weekly-review-flow.md)
+- BF-008 (システム運用フロー) ※新規作成を想定
 
 ### 関連する非機能要件
 

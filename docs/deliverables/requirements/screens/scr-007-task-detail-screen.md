@@ -18,6 +18,9 @@ graph TD
 ### 画面レイアウト
 
 - タスクの各詳細項目（タイトル、説明、期日、プロジェクト、コンテキスト、優先度など）が編集可能なフォームとして表示される。
+- GTDワークフローの視覚的ガイドUI（FR-060）。
+- サブタスクインライン管理UI（FR-061）。
+- 関連情報一元表示UI（FR-062）。
 - 「保存」ボタン、「削除」ボタン、「完了」ボタン。
 - コメント追加欄。
 
@@ -67,6 +70,9 @@ graph TD
 - [FR-003 (タスク整理機能)](../functional-requirements/fr-003-task-organization-function.md)
 - [FR-004 (タスク実行機能)](../functional-requirements/fr-004-task-execution-function.md)
 - [FR-007 (コンテキスト管理機能)](../functional-requirements/fr-007-context-management-function.md)
+- [FR-060 (GTDワークフロー視覚的ガイド機能)](../functional-requirements/fr-060-gtd-workflow-visual-guide-function.md)
+- [FR-061 (サブタスクインライン管理機能)](../functional-requirements/fr-061-subtask-inline-management-function.md)
+- [FR-062 (関連情報一元表示機能)](../functional-requirements/fr-062-related-information-unified-display-function.md)
 
 ### 関連する業務フロー
 
