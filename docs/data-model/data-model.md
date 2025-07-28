@@ -36,6 +36,14 @@ graph TD
     B -- 関連 --> E[成果物];
     E -- 関連 --> B;
     A -- 管理 --> D;
+    B -- 関連 --> F[コンテキスト];
+    A -- 受信 --> G[通知];
+    A -- 提出/承認 --> H[変更要求];
+    A -- 役割を持つ --> I[ロール];
+    I -- 権限を持つ --> J[権限];
+    B -- 依存 --> K[タスク依存関係];
+    D -- 進捗を持つ --> L[プロジェクト進捗スナップショット];
+    A -- 設定する --> M[外部ツール連携];
 ```
 
 ### 2.1. 主要エンティティ (Key Entities)
@@ -45,6 +53,14 @@ graph TD
 - **サブタスク**: タスクを構成するより小さな作業単位。
 - **プロジェクト**: 関連するタスクの集合。
 - **成果物**: タスクやプロジェクトに関連するファイルやドキュメント。
+- **コンテキスト**: タスクを実行する際の状況や環境。
+- **通知**: システムからの通知履歴や詳細。
+- **変更要求**: プロジェクトに対する要求変更。
+- **ロール**: ユーザーの役割。
+- **権限**: 各ロールに紐付けられる機能へのアクセス権限。
+- **タスク依存関係**: タスク間の依存関係のタイプや詳細。
+- **プロジェクト進捗スナップショット**: 特定時点のプロジェクト進捗に関する詳細データ。
+- **外部ツール連携**: 外部ツールとの連携設定。
 
 ## 3. 論理データモデル (Logical Data Model)
 
@@ -57,18 +73,33 @@ erDiagram
     PROJECT ||--o{ TASK : "contains"
     TASK ||--o{ ARTIFACT : "relates to"
     USER ||--o{ PROJECT : "manages"
+    CONTEXT ||--o{ TASK : "applies to"
+    USER ||--o{ NOTIFICATION : "receives"
+    USER ||--o{ CHANGEREQUEST : "proposes"
+    USER ||--o{ CHANGEREQUEST : "approves"
+    ROLE ||--o{ USER : "assigned to"
+    ROLE ||--o{ PERMISSION : "has"
+    TASK ||--o{ TASKDEPENDENCY : "precedes"
+    TASK ||--o{ TASKDEPENDENCY : "succeeds"
+    PROJECT ||--o{ PROJECTPROGRESSSNAPSHOT : "has snapshot"
+    USER ||--o{ EXTERNALTOOLINTEGRATION : "configures"
 ```
 
 ### 3.1. エンティティ定義 (Entity Definitions)
-
-<!-- 各エンティティの詳細を記述します。
-     ※詳細は `entities/` ディレクトリ内の各エンティティファイルを参照し、以下にエンティティをリストしてください。 -->
 
 - [ENT-2025-001 (User)](entities/user.md)
 - [ENT-2025-002 (Task)](entities/task.md)
 - [ENT-2025-003 (Subtask)](entities/subtask.md)
 - [ENT-2025-004 (Project)](entities/project.md)
 - [ENT-2025-005 (Artifact)](entities/artifact.md)
+- [ENT-2025-006 (Context)](entities/context.md)
+- [ENT-2025-007 (Notification)](entities/notification.md)
+- [ENT-2025-008 (ChangeRequest)](entities/change-request.md)
+- [ENT-2025-009 (Role)](entities/role.md)
+- [ENT-2025-010 (Permission)](entities/permission.md)
+- [ENT-2025-011 (TaskDependency)](entities/task-dependency.md)
+- [ENT-2025-012 (ProjectProgressSnapshot)](entities/project-progress-snapshot.md)
+- [ENT-2025-013 (ExternalToolIntegration)](entities/external-tool-integration.md)
 
 ### 3.2. リレーションシップ定義 (Relationship Definitions)
 
@@ -77,6 +108,16 @@ erDiagram
 - **プロジェクト - タスク**: プロジェクトは複数のタスクを含むことができる (1対多)。
 - **タスク - 成果物**: タスクは複数の成果物に関連付けることができる (1対多)。
 - **ユーザー - プロジェクト**: ユーザーは複数のプロジェクトを管理できる (1対多)。
+- **コンテキスト - タスク**: コンテキストは複数のタスクに適用される (1対多)。
+- **ユーザー - 通知**: ユーザーは複数の通知を受信する (1対多)。
+- **ユーザー - 変更要求 (提案者)**: ユーザーは複数の変更要求を提案できる (1対多)。
+- **ユーザー - 変更要求 (承認者)**: ユーザーは複数の変更要求を承認できる (1対多)。
+- **ロール - ユーザー**: ロールは複数のユーザーに割り当てられる (1対多)。
+- **ロール - 権限**: ロールは複数の権限を持つ (1対多)。
+- **タスク - タスク依存関係 (先行)**: タスクは複数のタスク依存関係の先行タスクとなる (1対多)。
+- **タスク - タスク依存関係 (後続)**: タスクは複数のタスク依存関係の後続タスクとなる (1対多)。
+- **プロジェクト - プロジェクト進捗スナップショット**: プロジェクトは複数の進捗スナップショットを持つ (1対多)。
+- **ユーザー - 外部ツール連携**: ユーザーは複数の外部ツール連携を設定できる (1対多)。
 
 ## 4. 物理データモデル (Physical Data Model)
 
@@ -93,6 +134,7 @@ erDiagram
         VARCHAR(255) task_id PK
         VARCHAR(255) user_id FK
         VARCHAR(255) project_id FK
+        VARCHAR(255) context_id FK
         TEXT description
         DATE due_date
         VARCHAR(50) status
@@ -114,61 +156,111 @@ erDiagram
         VARCHAR(255) file_name
         VARCHAR(255) file_path
     }
+    contexts {
+        VARCHAR(255) context_id PK
+        VARCHAR(100) context_name
+        TEXT description
+    }
+    notifications {
+        VARCHAR(255) notification_id PK
+        VARCHAR(255) user_id FK
+        VARCHAR(50) type
+        TEXT message
+        VARCHAR(50) status
+        DATETIME created_at
+        DATETIME read_at
+    }
+    change_requests {
+        VARCHAR(255) change_request_id PK
+        VARCHAR(255) title
+        TEXT description
+        TEXT reason
+        VARCHAR(255) proposer_user_id FK
+        VARCHAR(50) urgency
+        VARCHAR(50) status
+        VARCHAR(255) approved_by_user_id FK
+        TEXT approval_comment
+        DATETIME created_at
+        DATETIME updated_at
+    }
+    roles {
+        VARCHAR(255) role_id PK
+        VARCHAR(100) role_name
+        TEXT description
+    }
+    permissions {
+        VARCHAR(255) permission_id PK
+        VARCHAR(100) permission_name
+        TEXT description
+    }
+    task_dependencies {
+        VARCHAR(255) dependency_id PK
+        VARCHAR(255) predecessor_task_id FK
+        VARCHAR(255) successor_task_id FK
+        VARCHAR(50) type
+    }
+    project_progress_snapshots {
+        VARCHAR(255) snapshot_id PK
+        VARCHAR(255) project_id FK
+        DATETIME timestamp
+        DECIMAL(5,2) overall_progress_percentage
+        INT completed_tasks_count
+        INT remaining_tasks_count
+        TEXT bottleneck_tasks
+        TEXT delay_risk_tasks
+        TEXT resource_allocation_data
+        TEXT budget_consumption_data
+        TEXT plan_deviation_alerts
+    }
+    external_tool_integrations {
+        VARCHAR(255) integration_id PK
+        VARCHAR(255) user_id FK
+        VARCHAR(100) tool_name
+        TEXT auth_info
+        VARCHAR(50) sync_direction
+        VARCHAR(50) sync_frequency
+        TEXT data_mapping_rules
+        DATETIME last_sync_at
+    }
 
     users ||--o{ tasks : "has"
     tasks ||--o{ subtasks : "includes"
     projects ||--o{ tasks : "contains"
     tasks ||--o{ artifacts : "relates to"
+    users ||--o{ projects : "manages"
+    contexts ||--o{ tasks : "applies to"
+    users ||--o{ notifications : "receives"
+    users ||--o{ change_requests : "proposes"
+    users ||--o{ change_requests : "approves"
+    roles ||--o{ users : "assigned to"
+    roles ||--o{ permissions : "has"
+    tasks ||--o{ task_dependencies : "precedes"
+    tasks ||--o{ task_dependencies : "succeeds"
+    projects ||--o{ project_progress_snapshots : "has snapshot"
+    users ||--o{ external_tool_integrations : "configures"
 ```
 
 ### 4.1. テーブル定義 (Table Definitions)
 
-- **users テーブル**
-  - `user_id`: VARCHAR(255), PK, ユーザーの一意の識別子
-  - `username`: VARCHAR(255), ユーザー名
-  - `email`: VARCHAR(255), ユーザーのメールアドレス
-- **tasks テーブル**
-  - `task_id`: VARCHAR(255), PK, タスクの一意の識別子
-  - `user_id`: VARCHAR(255), FK, ユーザーID (users.user_id を参照)
-  - `project_id`: VARCHAR(255), FK, プロジェクトID (projects.project_id を参照)
-  - `description`: TEXT, タスクの内容
-  - `due_date`: DATE, 期限日
-  - `status`: VARCHAR(50), タスクのステータス (例: '未着手', '進行中', '完了')
-- **subtasks テーブル**
-  - `subtask_id`: VARCHAR(255), PK, サブタスクの一意の識別子
-  - `task_id`: VARCHAR(255), FK, 親タスクのID (tasks.task_id を参照)
-  - `description`: TEXT, サブタスクの内容
-  - `status`: VARCHAR(50), サブタスクのステータス
-- **projects テーブル**
-  - `project_id`: VARCHAR(255), PK, プロジェクトの一意の識別子
-  - `project_name`: VARCHAR(255), プロジェクト名
-  - `description`: TEXT, プロジェクトの説明
-- **artifacts テーブル**
-  - `artifact_id`: VARCHAR(255), PK, 成果物の一意の識別子
-  - `task_id`: VARCHAR(255), FK, 関連するタスクのID (tasks.task_id を参照)
-  - `file_name`: VARCHAR(255), ファイル名
-  - `file_path`: VARCHAR(255), ファイルパス
+各テーブルの定義は、対応するエンティティ定義ファイルを参照してください。
+
+- [users テーブル](entities/user.md)
+- [tasks テーブル](entities/task.md)
+- [subtasks テーブル](entities/subtask.md)
+- [projects テーブル](entities/project.md)
+- [artifacts テーブル](entities/artifact.md)
+- [contexts テーブル](entities/context.md)
+- [notifications テーブル](entities/notification.md)
+- [change_requests テーブル](entities/change-request.md)
+- [roles テーブル](entities/role.md)
+- [permissions テーブル](entities/permission.md)
+- [task_dependencies テーブル](entities/task-dependency.md)
+- [project_progress_snapshots テーブル](entities/project-progress-snapshot.md)
+- [external_tool_integrations テーブル](entities/external-tool-integration.md)
 
 ## 5. データ辞書 (Data Dictionary)
 
-システム内で使用されるすべてのデータ要素の定義を記述します。
-
-- **user_id**:
-  VARCHAR(255), ユーザーの一意の識別子。システム内でユーザーを特定するために使用される。
-- **username**: VARCHAR(255), ユーザーがシステムに表示される名前。
-- **email**:
-  VARCHAR(255), ユーザーの連絡先メールアドレス。ログインにも使用される。
-- **task_id**: VARCHAR(255), タスクの一意の識別子。タスク管理の基本単位。
-- **description**: TEXT, タスクやプロジェクト、成果物の詳細な内容を記述する。
-- **due_date**: DATE, タスクの完了期限。カレンダー表示やリマインダー機能に利用。
-- **status**: VARCHAR(50), タスクやサブタスクの現在の状態。例: '未着手',
-  '進行中', '完了', '保留'。
-- **project_id**:
-  VARCHAR(255), プロジェクトの一意の識別子。関連するタスクをグループ化する。
-- **artifact_id**:
-  VARCHAR(255), 成果物の一意の識別子。ファイルやドキュメントを管理する。
-- **file_name**: VARCHAR(255), 成果物のファイル名。
-- **file_path**: VARCHAR(255), ファイルパス
+システム内で使用されるすべてのデータ要素の定義は、[データ辞書](data-dictionary.md)を参照してください。
 
 ## 6. データフロー (Data Flow)
 
@@ -176,16 +268,56 @@ erDiagram
 
 ```mermaid
 graph TD
-    A[ユーザー入力] --> B{タスク作成};
-    B --> C[タスクデータベース];
-    C --> D{タスク表示};
-    D --> E[ユーザーインターフェース];
-    E --> A;
+    subgraph ユーザー操作
+        A[ユーザー入力] --> B{タスク作成/更新};
+        B --> C[タスクデータベース];
+        C --> D{タスク表示};
+        D --> E[ユーザーインターフェース];
+        E --> A;
 
-    F[ファイルアップロード] --> G{成果物保存};
-    G --> H[成果物ストレージ];
-    H --> I{成果物表示};
-    I --> E;
+        F[ファイルアップロード] --> G{成果物保存};
+        G --> H[成果物ストレージ];
+        H --> I{成果物表示};
+        I --> E;
+
+        J[コンテキスト設定] --> K[コンテキストデータベース];
+        K --> B;
+
+        L[通知設定] --> M[通知設定データベース];
+        M --> N{通知送信ロジック};
+        N --> O[通知データベース];
+        O --> E;
+
+        P[変更要求入力] --> Q[変更要求データベース];
+        Q --> R{変更要求承認ワークフロー};
+        R --> Q;
+        Q --> S{影響範囲分析};
+        S --> E;
+
+        T[ユーザー/ロール/権限管理] --> U[ユーザー/ロール/権限データベース];
+        U --> A;
+
+        V[外部ツール連携設定] --> W[外部ツール連携データベース];
+        W --> X{データインポート/エクスポート};
+        X --> C;
+        X --> Y[外部ツール];
+    end
+
+    subgraph システム内部処理
+        C --> Z{タスク依存関係管理};
+        Z --> AA[タスク依存関係データベース];
+        AA --> D;
+
+        C --> BB{進捗データ収集};
+        BB --> CC[プロジェクト進捗スナップショットデータベース];
+        CC --> DD{進捗データ分析};
+        DD --> EE[進捗ダッシュボード表示];
+        EE --> E;
+    end
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#f9f,stroke:#333,stroke-width:2px
+    style Y fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
 ## 7. データ移行要件 (Data Migration Requirements)
