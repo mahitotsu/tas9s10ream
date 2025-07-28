@@ -1,9 +1,19 @@
 #!/bin/bash
 
-# Build and run the container in detached mode
-_project_dir_name_temp=$(basename "$(pwd)")
-export PROJECT_DIR_NAME="${_project_dir_name_temp}"
-docker compose up --build -d
+# Determine the current project directory name and export it.
+# This variable is used in docker-compose.yml to set up volumes and working directory.
+PROJECT_DIR_NAME=$(basename "$(pwd)")
+export PROJECT_DIR_NAME
+
+# Set HOST_UID and HOST_GID for Docker build arguments
+HOST_UID=$(id -u)
+HOST_GID=$(id -g)
+
+# Build the container with explicit build arguments
+docker compose build --build-arg HOST_UID="${HOST_UID}" --build-arg HOST_GID="${HOST_GID}"
+
+# Run the container in detached mode
+docker compose up -d
 
 echo "Waiting for container 'gemini-cli' to be ready..."
 

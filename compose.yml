@@ -3,9 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        HOST_UID: ${UID:-1000}
-        HOST_GID: ${GID:-${UID:-1000}}
     volumes:
       - .:/home/appuser/${PROJECT_DIR_NAME}
       - .:/tmp:/tmp
