@@ -4,7 +4,29 @@
   "mcpServers": {
     "perplexity-mcp": {
       "command": "uvx",
-      "args": ["perplexity-mcp"]
+      "args": ["perplexity-mcp"],
+      "env": {}
+    },
+    "awslabs.aws-documentation-mcp-server": {
+      "command": "uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    },
+    "awslabs.cdk-mcp-server": {
+      "command": "uvx",
+      "args": ["awslabs.cdk-mcp-server@latest"],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    },
+    "awslabs.aws-pricing-mcp-server": {
+      "command": "uvx",
+      "args": ["awslabs.aws-pricing-mcp-server@latest"],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
     }
   }
 }
