@@ -1,0 +1,10 @@
+{
+  "theme": "Default",
+  "selectedAuthType": "vertex-ai",
+  "mcpServers": {
+    "perplexity-mcp": {
+      "command": "uvx",
+      "args": ["perplexity-mcp"]
+    }
+  }
+}

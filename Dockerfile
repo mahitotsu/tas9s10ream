@@ -18,7 +18,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl -L https://github.com/mvdan/sh/releases/download/v3.8.0/shfmt_v3.8.0_linux_amd64 \
     -o /usr/local/bin/shfmt && \
     chmod +x /usr/local/bin/shfmt && \
-    curl -L https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64     -o /usr/local/bin/hadolint &&     chmod +x /usr/local/bin/hadolint &&     rm -rf /var/lib/apt/lists/*# Generate en_US.UTF-8 localeRUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/*     && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen     && locale-gen
+    curl -L https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64     -o /usr/local/bin/hadolint &&     chmod +x /usr/local/bin/hadolint && \
+    # Install gcloud CLI
+    apt-get install -y apt-transport-https ca-certificates gnupg \
+    && echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
+    && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - \
+    && apt-get update && apt-get install -y google-cloud-sdk \
+    && rm -rf /var/lib/apt/lists/*
+
+# Generate en_US.UTF-8 locale
+RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/*     && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen     && locale-gen
 
 # Declare build arguments for HOST_UID and HOST_GID
 ARG HOST_UID=1000

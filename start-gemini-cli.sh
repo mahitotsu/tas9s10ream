@@ -46,12 +46,9 @@ if [ $ATTEMPT -eq $MAX_ATTEMPTS ]; then
 fi
 
 echo "
-Running gemini-cli with a single prompt to generate authentication credentials..."
-gemini -p /quit
-
-echo "
 Starting gemini-cli inside the container..."
-docker compose exec gemini-cli bash -l -c "gemini --model=gemini-2.5-flash"
+docker compose exec gemini-cli bash -l -c "gcloud auth application-default login"
+docker compose exec gemini-cli bash -l -c "gemini"
 
 echo "
 To stop the container, use:"
