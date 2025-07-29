@@ -17,6 +17,9 @@ graph TD
 ### 画面レイアウト
 
 - 上部にタスク入力フィールドと「保存」ボタン。
+- 音声入力ボタン。
+- クイックタグ/コンテキスト付与UI。
+- ドラッグ＆ドロップファイル添付エリア。
 - その下に、インボックスに登録されたタスクの一覧が表示される。
 - 各タスクは、タイトル、登録日時、簡単なプレビューが表示される。
 - タスク一覧はスクロール可能。
@@ -48,6 +51,9 @@ graph TD
 ### 関連する機能要件
 
 - [FR-001 (タスク収集機能)](../functional-requirements/fr-001-task-collection-function.md)
+- [FR-048 (音声入力機能)](../functional-requirements/fr-048-voice-input-function.md)
+- [FR-049 (クイックタグ/コンテキスト付与機能)](../functional-requirements/fr-049-quick-tag-context-assignment-function.md)
+- [FR-050 (ドラッグ＆ドロップファイル添付機能)](../functional-requirements/fr-050-drag-and-drop-file-attachment-function.md)
 
 ### 関連する業務フロー
 
