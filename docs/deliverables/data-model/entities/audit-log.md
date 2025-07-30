@@ -18,6 +18,7 @@
 | `entity_id`      | UUID     | オプション | 操作対象のエンティティのID                                           |
 | `details`        | JSON     | オプション | 操作の詳細（変更前後の値など）                                       |
 | `ip_address`     | String   | オプション | 操作元のIPアドレス                                                   |
+| `updated_at`     | DATETIME | 必須       | 更新日時                                                             |
 
 ## 関係
 

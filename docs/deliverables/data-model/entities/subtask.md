@@ -14,6 +14,8 @@ ENT-2025-003
 - `task_id`: VARCHAR(255), FK, 親タスクのID (tasks.task_id を参照)
 - `description`: TEXT, サブタスクの内容
 - `status`: VARCHAR(50), サブタスクのステータス
+- `created_at`: DATETIME, 作成日時
+- `updated_at`: DATETIME, 更新日時
 
 ### リレーションシップ
 

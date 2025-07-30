@@ -17,6 +17,8 @@
 | `currency`     | String   | 必須       | 通貨（例: 'USD', 'JPY'）                |
 | `resource_id`  | String   | オプション | 関連するリソースのID                    |
 | `project_id`   | UUID     | オプション | 関連するプロジェクトのID                |
+| `created_at`   | DATETIME | 必須       | 作成日時                                |
+| `updated_at`   | DATETIME | 必須       | 更新日時                                |
 
 ## 関係
 

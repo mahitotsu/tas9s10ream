@@ -20,6 +20,8 @@ Tas9s10reamと外部のプロジェクト管理ツールやタスク管理ツー
 - `sync_frequency`: VARCHAR(50), 同期頻度（例: `realtime`, `hourly`, `daily`）
 - `data_mapping_rules`: TEXT, データマッピングルール（JSON形式など）
 - `last_sync_at`: DATETIME, オプション, 最終同期日時
+- `created_at`: DATETIME, 作成日時
+- `updated_at`: DATETIME, 更新日時
 
 ### リレーションシップ
 

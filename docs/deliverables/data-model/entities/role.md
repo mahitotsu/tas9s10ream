@@ -14,11 +14,14 @@ ENT-2025-009
 - `role_name`: VARCHAR(100), ロールの名称（例: `ITプロジェクトメンバー`,
   `ITプロジェクト管理者`）
 - `description`: TEXT, オプション, ロールの説明
+- `created_at`: DATETIME, 作成日時
+- `updated_at`: DATETIME, 更新日時
 
 ### リレーションシップ
 
 - `USER`: 1対多, ロールは複数のユーザーに割り当てられる
-- `PERMISSION`: 1対多, ロールは複数の権限を持つ
+- `PERMISSION`: 多対多, ロールは複数の権限を持つ (中間テーブル `ROLE_PERMISSION`
+  を介する)
 
 ### 関連する機能要件
 

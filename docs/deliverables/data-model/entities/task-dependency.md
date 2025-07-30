@@ -15,6 +15,8 @@ ENT-2025-011
 - `successor_task_id`: VARCHAR(255), FK, 後続タスクのID (tasks.task_id を参照)
 - `type`: VARCHAR(50), 依存関係のタイプ（例: `FS` (終了-開始), `SS` (開始-開始),
   `FF` (終了-終了), `SF` (開始-終了)）
+- `created_at`: DATETIME, 作成日時
+- `updated_at`: DATETIME, 更新日時
 
 ### リレーションシップ
 

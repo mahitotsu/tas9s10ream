@@ -14,6 +14,8 @@ ENT-2025-005
 - `task_id`: VARCHAR(255), FK, 関連するタスクのID (tasks.task_id を参照)
 - `file_name`: VARCHAR(255), ファイル名
 - `file_path`: VARCHAR(255), ファイルパス
+- `created_at`: DATETIME, 作成日時
+- `updated_at`: DATETIME, 更新日時
 
 ### リレーションシップ
 

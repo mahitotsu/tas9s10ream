@@ -10,12 +10,16 @@ ENT-2025-002
 
 ### 属性 (カラム)
 
-- `task_id`: VARCHAR(255), PK, タスクの一意の識別子
-- `user_id`: VARCHAR(255), FK, ユーザーID (users.user_id を参照)
-- `project_id`: VARCHAR(255), FK, プロジェクトID (projects.project_id を参照)
+- `task_id`: CHAR(36), PK, タスクの一意の識別子
+- `user_id`: CHAR(36), FK, ユーザーID (users.user_id を参照)
+- `project_id`: CHAR(36), FK, プロジェクトID (projects.project_id を参照)
+- `title`: VARCHAR(255), タスクのタイトル
 - `description`: TEXT, タスクの内容
 - `due_date`: DATE, 期限日
 - `status`: VARCHAR(50), タスクのステータス (例: '未着手', '進行中', '完了')
+- `created_at`: DATETIME, 作成日時
+- `updated_at`: DATETIME, 更新日時
+- `is_deleted`: BOOLEAN, 論理削除フラグ (デフォルト: false)
 
 ### リレーションシップ
 

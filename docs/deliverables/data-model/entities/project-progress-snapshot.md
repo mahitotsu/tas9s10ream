@@ -24,6 +24,7 @@ ENT-2025-012
   TEXT, オプション, リソース配分データ（JSON形式など）
 - `budget_consumption_data`: TEXT, オプション, 予算消費データ（JSON形式など）
 - `plan_deviation_alerts`: TEXT, オプション, 計画乖離アラート（JSON形式など）
+- `updated_at`: DATETIME, 更新日時
 
 ### リレーションシップ
 

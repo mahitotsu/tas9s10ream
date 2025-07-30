@@ -18,6 +18,7 @@ ENT-2025-007
 - `status`: VARCHAR(50), 通知のステータス（例: `sent`, `read`, `failed`）
 - `created_at`: DATETIME, 通知が作成された日時
 - `read_at`: DATETIME, オプション, 通知が読まれた日時
+- `updated_at`: DATETIME, 更新日時
 
 ### リレーションシップ
 

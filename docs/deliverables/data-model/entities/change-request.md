@@ -12,18 +12,15 @@ ENT-2025-008
 
 - `change_request_id`: VARCHAR(255), PK, 変更要求の一意の識別子
 - `title`: VARCHAR(255), 変更要求のタイトル
-- `description`: TEXT, 変更要求の詳細内容
+- `description`: TEXT, 変更要求の詳細
 - `reason`: TEXT, 変更要求の理由
-- `proposer_user_id`: VARCHAR(255), FK, 変更要求を提出したユーザーのID
-  (users.user_id を参照)
-- `urgency`: VARCHAR(50), 緊急度（例: `高`, `中`, `低`）
-- `status`: VARCHAR(50), 変更要求のステータス（例: `新規`, `承認待ち`,
-  `承認済み`, `却下`, `完了`）
-- `approved_by_user_id`: VARCHAR(255), FK, オプション, 承認を行ったユーザーのID
-  (users.user_id を参照)
-- `approval_comment`: TEXT, オプション, 承認/却下時のコメント
-- `created_at`: DATETIME, 変更要求が作成された日時
-- `updated_at`: DATETIME, 変更要求が最後に更新された日時
+- `proposer_user_id`: CHAR(36), FK, 提案者ユーザーID (users.user_id を参照)
+- `urgency`: VARCHAR(50), 緊急度 (例: '低', '中', '高')
+- `status`: VARCHAR(50), 変更要求のステータス (例: '提案中', '承認済み', '却下')
+- `approver_user_id`: CHAR(36), FK, 承認者ユーザーID (users.user_id を参照)
+- `approval_comment`: TEXT, 承認コメント
+- `created_at`: DATETIME, 作成日時
+- `updated_at`: DATETIME, 更新日時
 
 ### リレーションシップ
 

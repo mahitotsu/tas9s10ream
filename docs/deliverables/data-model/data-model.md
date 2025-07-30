@@ -22,6 +22,8 @@ DMD-2025-001
 
 - 要件定義書: `../../deliverables/requirements/requirements-definition.md`
 - 用語集: `../../standards-and-templates/glossary.md`
+- データモデル設計ルール:
+  `../../standards-and-templates/rules/data-model-design-rules.md`
 
 ## 2. 概念データモデル (Conceptual Data Model)
 
@@ -88,12 +90,12 @@ erDiagram
     TASK ||--o{ ARTIFACT : "relates to"
     USER ||--o{ PROJECT : "manages"
     CONTEXT ||--o{ TASK : "applies to"
-    CONTEXT ||--o{ TASK : "applies to"
     USER ||--o{ NOTIFICATION : "receives"
     USER ||--o{ CHANGEREQUEST : "proposes"
     USER ||--o{ CHANGEREQUEST : "approves"
     ROLE ||--o{ USER : "assigned to"
-    ROLE ||--o{ PERMISSION : "has"
+    ROLE ||--o{ ROLE_PERMISSION : "has"
+    PERMISSION ||--o{ ROLE_PERMISSION : "has"
     TASK ||--o{ TASKDEPENDENCY : "precedes"
     TASK ||--o{ TASKDEPENDENCY : "succeeds"
     PROJECT ||--o{ PROJECTPROGRESSSNAPSHOT : "has snapshot"
@@ -133,24 +135,27 @@ erDiagram
 - [ENT-2025-020 (HelpContent)](entities/help-content.md)
 - [ENT-2025-021 (Tutorial)](entities/tutorial.md)
 - [ENT-2025-022 (AuditLog)](entities/audit-log.md)
+- [ENT-2025-023 (RolePermission)](entities/role-permission.md)
 
 ### 3.2. リレーションシップ定義 (Relationship Definitions)
 
-- **ユーザー - タスク**: ユーザーは複数のタスクを投稿できる (1対多)。
-- **タスク - サブタスク**: タスクは複数のサブタスクを含むことができる (1対多)。
-- **プロジェクト - タスク**: プロジェクトは複数のタスクを含むことができる (1対多)。
-- **タスク - 成果物**: タスクは複数の成果物に関連付けることができる (1対多)。
-- **ユーザー - プロジェクト**: ユーザーは複数のプロジェクトを管理できる (1対多)。
-- **コンテキスト - タスク**: コンテキストは複数のタスクに適用される (1対多)。
-- **ユーザー - 通知**: ユーザーは複数の通知を受信する (1対多)。
-- **ユーザー - 変更要求 (提案者)**: ユーザーは複数の変更要求を提案できる (1対多)。
-- **ユーザー - 変更要求 (承認者)**: ユーザーは複数の変更要求を承認できる (1対多)。
-- **ロール - ユーザー**: ロールは複数のユーザーに割り当てられる (1対多)。
-- **ロール - 権限**: ロールは複数の権限を持つ (1対多)。
-- **タスク - タスク依存関係 (先行)**: タスクは複数のタスク依存関係の先行タスクとなる (1対多)。
-- **タスク - タスク依存関係 (後続)**: タスクは複数のタスク依存関係の後続タスクとなる (1対多)。
-- **プロジェクト - プロジェクト進捗スナップショット**: プロジェクトは複数の進捗スナップショットを持つ (1対多)。
-- **ユーザー - 外部ツール連携**: ユーザーは複数の外部ツール連携を設定できる (1対多)。
+- **ユーザー - タスク**: ユーザーは複数のタスクを作成・所有できる (1対多)。
+- **タスク - サブタスク**: タスクは複数のサブタスクを構成する (1対多)。
+- **プロジェクト - タスク**: プロジェクトは複数のタスクを配下に持つ (1対多)。
+- **タスク - 成果物**: タスクは複数の成果物を生成・関連付けられる (1対多)。
+- **ユーザー - プロジェクト**: ユーザーは複数のプロジェクトを作成・管理する (1対多)。
+- **コンテキスト - タスク**:
+  1つのコンテキストは複数のタスクに適用される (1対多)。
+- **ユーザー - 通知**: ユーザーは複数の通知を受け取る (1対多)。
+- **ユーザー - 変更要求 (提案者)**: ユーザーは複数の変更要求を提案する (1対多)。
+- **ユーザー - 変更要求 (承認者)**: ユーザーは複数の変更要求を承認する (1対多)。
+- **ロール - ユーザー**: 1つのロールは複数のユーザーに割り当てられる (1対多)。
+- **ロール - 権限**: ロールは複数の権限を持ち、権限は複数のロールに割り当てられる (多対多、中間テーブル
+  `ROLE_PERMISSION` を介する)。
+- **タスク - タスク依存関係 (先行)**: タスクは複数のタスク依存関係の先行タスクとして関連付けられる (1対多)。
+- **タスク - タスク依存関係 (後続)**: タスクは複数のタスク依存関係の後続タスクとして関連付けられる (1対多)。
+- **プロジェクト - プロジェクト進捗スナップショット**: プロジェクトの進捗は複数のスナップショットとして記録される (1対多)。
+- **ユーザー - 外部ツール連携**: ユーザーは複数の外部ツール連携を設定する (1対多)。
 
 ## 4. 物理データモデル (Physical Data Model)
 
@@ -159,40 +164,66 @@ erDiagram
 ```mermaid
 erDiagram
     users {
-        VARCHAR(255) user_id PK
-        VARCHAR(255) username
-        VARCHAR(255) email
+        CHAR(36) user_id PK
+        VARCHAR(255) email UNIQUE
+        VARCHAR(255) password_hash
+        VARCHAR(255) full_name
+        CHAR(36) role_id FK
+        DATETIME created_at
+        DATETIME updated_at
+        DATETIME last_login_at NULL
+        BOOLEAN is_mfa_enabled DEFAULT FALSE
+        TEXT mfa_secret NULL
+        JSON mfa_recovery_codes NULL
+        JSON accessibility_settings NULL
+        BOOLEAN is_deleted DEFAULT FALSE
     }
     tasks {
-        VARCHAR(255) task_id PK
-        VARCHAR(255) user_id FK
-        VARCHAR(255) project_id FK
-        VARCHAR(255) context_id FK
+        CHAR(36) task_id PK
+        CHAR(36) user_id FK
+        CHAR(36) project_id FK
+        CHAR(36) context_id FK
+        VARCHAR(255) title
         TEXT description
         DATE due_date
         VARCHAR(50) status
+        DATETIME created_at
+        DATETIME updated_at
+        BOOLEAN is_deleted DEFAULT FALSE
     }
     subtasks {
         VARCHAR(255) subtask_id PK
         VARCHAR(255) task_id FK
         TEXT description
         VARCHAR(50) status
+        DATETIME created_at
+        DATETIME updated_at
     }
     projects {
-        VARCHAR(255) project_id PK
+        CHAR(36) project_id PK
         VARCHAR(255) project_name
         TEXT description
+        DATE start_date NULL
+        DATE end_date NULL
+        CHAR(36) manager_user_id FK NULL
+        DATETIME created_at
+        DATETIME updated_at
+        BOOLEAN is_deleted DEFAULT FALSE
     }
     artifacts {
         VARCHAR(255) artifact_id PK
         VARCHAR(255) task_id FK
         VARCHAR(255) file_name
         VARCHAR(255) file_path
+        DATETIME created_at
+        DATETIME updated_at
     }
     contexts {
         VARCHAR(255) context_id PK
         VARCHAR(100) context_name
         TEXT description
+        DATETIME created_at
+        DATETIME updated_at
     }
     notifications {
         VARCHAR(255) notification_id PK
@@ -202,6 +233,7 @@ erDiagram
         VARCHAR(50) status
         DATETIME created_at
         DATETIME read_at
+        DATETIME updated_at
     }
     change_requests {
         VARCHAR(255) change_request_id PK
@@ -211,7 +243,7 @@ erDiagram
         VARCHAR(255) proposer_user_id FK
         VARCHAR(50) urgency
         VARCHAR(50) status
-        VARCHAR(255) approved_by_user_id FK
+        CHAR(36) approver_user_id FK NULL
         TEXT approval_comment
         DATETIME created_at
         DATETIME updated_at
@@ -220,17 +252,30 @@ erDiagram
         VARCHAR(255) role_id PK
         VARCHAR(100) role_name
         TEXT description
+        DATETIME created_at
+        DATETIME updated_at
     }
     permissions {
         VARCHAR(255) permission_id PK
         VARCHAR(100) permission_name
         TEXT description
+        DATETIME created_at
+        DATETIME updated_at
+    }
+    role_permissions {
+        CHAR(36) role_id FK
+        CHAR(36) permission_id FK
+        DATETIME created_at
+        DATETIME updated_at
+        PRIMARY KEY (role_id, permission_id)
     }
     task_dependencies {
         VARCHAR(255) dependency_id PK
         VARCHAR(255) predecessor_task_id FK
         VARCHAR(255) successor_task_id FK
         VARCHAR(50) type
+        DATETIME created_at
+        DATETIME updated_at
     }
     project_progress_snapshots {
         VARCHAR(255) snapshot_id PK
@@ -244,6 +289,7 @@ erDiagram
         TEXT resource_allocation_data
         TEXT budget_consumption_data
         TEXT plan_deviation_alerts
+        DATETIME updated_at
     }
     external_tool_integrations {
         VARCHAR(255) integration_id PK
@@ -254,6 +300,8 @@ erDiagram
         VARCHAR(50) sync_frequency
         TEXT data_mapping_rules
         DATETIME last_sync_at
+        DATETIME created_at
+        DATETIME updated_at
     }
     system_logs {
         VARCHAR(255) log_id PK
@@ -265,6 +313,7 @@ erDiagram
         VARCHAR(255) request_id
         VARCHAR(50) ip_address
         TEXT details
+        DATETIME updated_at
     }
     system_metrics {
         VARCHAR(255) metric_id PK
@@ -273,6 +322,7 @@ erDiagram
         FLOAT value
         VARCHAR(50) unit
         VARCHAR(255) resource_id
+        DATETIME updated_at
     }
     system_alerts {
         VARCHAR(255) alert_id PK
@@ -285,6 +335,8 @@ erDiagram
         VARCHAR(255) related_metric_id FK
         DATETIME resolved_at
         VARCHAR(255) resolved_by FK
+        DATETIME created_at
+        DATETIME updated_at
     }
     backup_records {
         VARCHAR(255) backup_id PK
@@ -295,6 +347,7 @@ erDiagram
         BIGINT size_bytes
         VARCHAR(255) created_by FK
         TEXT error_message
+        DATETIME updated_at
     }
     cost_data {
         VARCHAR(255) cost_id PK
@@ -304,6 +357,8 @@ erDiagram
         VARCHAR(10) currency
         VARCHAR(255) resource_id
         VARCHAR(255) project_id FK
+        DATETIME created_at
+        DATETIME updated_at
     }
     system_documents {
         VARCHAR(255) document_id PK
@@ -345,6 +400,7 @@ erDiagram
         VARCHAR(255) entity_id
         TEXT details
         VARCHAR(50) ip_address
+        DATETIME updated_at
     }
 
     users ||--o{ tasks : "has"
@@ -357,7 +413,8 @@ erDiagram
     users ||--o{ change_requests : "proposes"
     users ||--o{ change_requests : "approves"
     roles ||--o{ users : "assigned to"
-    roles ||--o{ permissions : "has"
+    roles ||--o{ role_permissions : "has"
+    permissions ||--o{ role_permissions : "has"
     tasks ||--o{ task_dependencies : "precedes"
     tasks ||--o{ task_dependencies : "succeeds"
     projects ||--o{ project_progress_snapshots : "has snapshot"
@@ -399,6 +456,7 @@ erDiagram
 - [help_contents テーブル](entities/help-content.md)
 - [tutorials テーブル](entities/tutorial.md)
 - [audit_logs テーブル](entities/audit-log.md)
+- [role_permissions テーブル](entities/role-permission.md)
 
 ## 5. データ辞書 (Data Dictionary)
 

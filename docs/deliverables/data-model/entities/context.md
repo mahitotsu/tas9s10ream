@@ -14,6 +14,8 @@ ENT-2025-006
 - `context_name`: VARCHAR(100), コンテキストの名称（例: `@PC`, `@電話`,
   `@自宅`）
 - `description`: TEXT, オプション, コンテキストの詳細な説明
+- `created_at`: DATETIME, 作成日時
+- `updated_at`: DATETIME, 更新日時
 
 ### リレーションシップ
 

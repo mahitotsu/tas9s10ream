@@ -14,10 +14,13 @@ ENT-2025-010
 - `permission_name`: VARCHAR(100), 権限の名称（例: `task_create`,
   `project_edit`, `user_manage`）
 - `description`: TEXT, オプション, 権限の説明
+- `created_at`: DATETIME, 作成日時
+- `updated_at`: DATETIME, 更新日時
 
 ### リレーションシップ
 
-- `ROLE`: 多対1, 権限は1つのロールに紐付けられる
+- `ROLE`: 多対多, 権限は複数のロールに紐付けられる (中間テーブル
+  `ROLE_PERMISSION` を介する)
 
 ### 関連する機能要件
 
