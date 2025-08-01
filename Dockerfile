@@ -8,8 +8,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     python3-pip \
     python3-venv \
-    nodejs \
-    npm \
     sudo \
     pipx \
     shellcheck \
@@ -19,6 +17,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     -o /usr/local/bin/shfmt && \
     chmod +x /usr/local/bin/shfmt && \
     curl -L https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64     -o /usr/local/bin/hadolint &&     chmod +x /usr/local/bin/hadolint && \
+    # Install Node.js (LTS version)
+    curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
+    apt-get install -y nodejs && \
     # Install gcloud CLI
     apt-get install -y apt-transport-https ca-certificates gnupg \
     && echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
