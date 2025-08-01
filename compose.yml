@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/home/appuser/${PROJECT_DIR_NAME}
-      - .:/tmp:/tmp
+      - /tmp:/tmp
       - ~/.gitconfig:/home/appuser/.gitconfig:ro
     env_file: .env
     environment:
